@@ -437,6 +437,15 @@ nav {
 
 .card-body { padding: 28px; }
 
+.card-theme-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--terra);
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
 .card-status-dot {
   display: inline-block;
   width: 7px; height: 7px;
