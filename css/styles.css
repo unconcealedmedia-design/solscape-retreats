@@ -1,8 +1,45 @@
-/* ─────────────────────────────────────────────
+/* ================================================================
    SolScape Retreats — Shared Stylesheet
-   ───────────────────────────────────────────── */
+   ================================================================
+   TABLE OF CONTENTS
+
+    1.  CSS RESET & BOX MODEL
+    2.  DESIGN TOKENS (colours, fonts)
+    3.  TYPOGRAPHY HELPERS
+    4.  LAYOUT UTILITIES
+    5.  BUTTONS
+    6.  NAVIGATION (incl. hamburger & mobile drawer)
+    7.  HERO — FULL BLEED (homepage)
+    8.  MANIFESTO BAND
+    9.  EXPERIENCE CATEGORIES
+   10.  RETREAT CARDS
+   11.  WHAT'S INCLUDED
+   12.  TESTIMONIALS
+   13.  NEWSLETTER BAND
+   14.  SUSTAINABILITY SECTION
+   15.  CTA BAND
+   16.  ABOUT INLINE (homepage founders block)
+   17.  PILLAR TILES
+   18.  FOOTER
+   19.  RETREAT DETAIL PAGE (hero, overview, facts, inc/exc, inquiry)
+   20.  ABOUT PAGE (brand story, team, values)
+   21.  CONTACT PAGE
+   22.  EXPERIENCE PAGE (philosophy, offerings, quotes, hosts)
+   23.  RESPONSIVE — 1024px and below
+   24.  RESPONSIVE — 768px and below
+   25.  RESPONSIVE — 480px and below
+
+   ================================================================ */
+
+/* ================================================================
+   1. CSS RESET & BOX MODEL
+   ================================================================ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ================================================================
+   2. DESIGN TOKENS (colours, fonts)
+   ================================================================ */
 
 :root {
   /* ── Brand-guideline exact colours ── */
@@ -27,7 +64,9 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── TYPOGRAPHY HELPERS ─── */
+/* ================================================================
+   3. TYPOGRAPHY HELPERS
+   ================================================================ */
 .section-label {
   font-size: 0.68rem;
   letter-spacing: 0.22em;
@@ -60,11 +99,15 @@ body {
   margin: 28px 0;
 }
 
-/* ─── LAYOUT ─── */
+/* ================================================================
+   4. LAYOUT UTILITIES
+   ================================================================ */
 section { padding: 100px 40px; }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* ─── BUTTONS ─── */
+/* ================================================================
+   5. BUTTONS
+   ================================================================ */
 .btn {
   display: inline-block;
   padding: 14px 36px;
@@ -100,7 +143,9 @@ section { padding: 100px 40px; }
 }
 .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
 
-/* ─── NAVIGATION ─── */
+/* ================================================================
+   6. NAVIGATION (incl. hamburger & mobile drawer)
+   ================================================================ */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between;
@@ -247,7 +292,9 @@ nav {
 .mobile-menu ul li a:hover { color: var(--terra); }
 .mobile-menu .btn { display: block; text-align: center; margin-top: 20px; }
 
-/* ─── HERO (full-bleed photo) ─── */
+/* ================================================================
+   7. HERO — FULL BLEED (homepage)
+   ================================================================ */
 .hero-full {
   min-height: 100vh;
   position: relative;
@@ -328,7 +375,9 @@ nav {
   50% { opacity: 1; }
 }
 
-/* ─── MANIFESTO ─── */
+/* ================================================================
+   8. MANIFESTO BAND
+   ================================================================ */
 .manifesto {
   background: var(--charcoal);
   padding: 80px 40px;
@@ -344,8 +393,17 @@ nav {
   margin: 0 auto;
 }
 .manifesto-text strong { font-weight: 500; color: var(--gold); }
+.manifesto-sub {
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: var(--sand);
+  max-width: 580px;
+  margin: 24px auto 0;
+}
 
-/* ─── EXPERIENCE CATEGORIES ─── */
+/* ================================================================
+   9. EXPERIENCE CATEGORIES
+   ================================================================ */
 .categories { background: var(--cream); }
 
 .categories-header { text-align: center; margin-bottom: 60px; }
@@ -379,7 +437,9 @@ nav {
   color: var(--mocha);
 }
 
-/* ─── RETREAT CARDS ─── */
+/* ================================================================
+   10. RETREAT CARDS
+   ================================================================ */
 .retreats { background: var(--linen); }
 
 .retreats-header {
@@ -495,7 +555,9 @@ nav {
 }
 .card-link:hover { opacity: 0.7; }
 
-/* ─── WHAT'S INCLUDED ─── */
+/* ================================================================
+   11. WHAT'S INCLUDED
+   ================================================================ */
 .includes-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -522,7 +584,9 @@ nav {
 }
 .include-item p { font-size: 0.84rem; line-height: 1.65; color: var(--mocha); }
 
-/* ─── TESTIMONIALS ─── */
+/* ================================================================
+   12. TESTIMONIALS
+   ================================================================ */
 .testimonials { background: var(--charcoal); }
 .testimonials .section-label { color: var(--gold); }
 .testimonials .section-title { color: var(--linen); }
@@ -580,7 +644,9 @@ nav {
 }
 .carousel-dot.active { background: var(--gold); }
 
-/* ─── NEWSLETTER BAND ─── */
+/* ================================================================
+   13. NEWSLETTER BAND
+   ================================================================ */
 .newsletter {
   background: var(--terra);
   padding: 80px 40px;
@@ -644,7 +710,9 @@ nav {
   margin-top: 12px;
 }
 
-/* ─── SUSTAINABILITY ─── */
+/* ================================================================
+   14. SUSTAINABILITY SECTION
+   ================================================================ */
 .sustainability {
   background: var(--cream);
   padding: 80px 40px;
@@ -683,7 +751,9 @@ nav {
 }
 .sus-item p { font-size: 0.84rem; line-height: 1.7; color: var(--mocha); }
 
-/* ─── CTA BAND ─── */
+/* ================================================================
+   15. CTA BAND
+   ================================================================ */
 .cta-band {
   padding: 100px 40px;
   text-align: center;
@@ -709,7 +779,9 @@ nav {
   line-height: 1.8;
 }
 
-/* ─── ABOUT SECTION (inline on homepage) ─── */
+/* ================================================================
+   16. ABOUT INLINE (homepage founders block)
+   ================================================================ */
 .about { background: var(--charcoal); color: var(--linen); }
 .about-grid {
   display: grid;
@@ -747,7 +819,9 @@ nav {
 }
 .founder-info p { font-size: 0.82rem; color: var(--sand); line-height: 1.6; }
 
-/* ─── PILLAR TILES (Experience section) ─── */
+/* ================================================================
+   17. PILLAR TILES
+   ================================================================ */
 .pillars-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -764,7 +838,9 @@ nav {
 }
 .pillar p { font-size: 0.87rem; line-height: 1.75; color: var(--mocha); }
 
-/* ─── FOOTER ─── */
+/* ================================================================
+   18. FOOTER
+   ================================================================ */
 footer {
   background: var(--charcoal);
   padding: 56px 60px 40px;
@@ -818,7 +894,20 @@ footer {
 .footer-social a { color: var(--sand); transition: color 0.2s; line-height: 0; }
 .footer-social a:hover { color: var(--terra); }
 
-/* ─── RETREAT DETAIL PAGE ─── */
+/* footer logo image */
+.footer-logo-img {
+  max-width: 270px;
+  max-height: 90px;
+  width: auto;
+  height: auto;
+  display: block;
+  margin-bottom: 14px;
+  opacity: 0.88;
+}
+
+/* ================================================================
+   19. RETREAT DETAIL PAGE (hero, overview, facts, inc/exc, inquiry)
+   ================================================================ */
 .detail-hero {
   min-height: 70vh;
   position: relative;
@@ -854,6 +943,17 @@ footer {
   text-transform: uppercase;
   color: rgba(255,255,255,0.9);
   border-radius: 2px;
+}
+
+/* hero brand watermark */
+.hero-brand-mark {
+  width: 110px;
+  height: auto;
+  opacity: 0.65;
+  margin-top: 28px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Overview 2-col */
@@ -998,7 +1098,9 @@ footer {
   margin-top: 48px;
 }
 
-/* ─── ABOUT PAGE ─── */
+/* ================================================================
+   20. ABOUT PAGE (brand story, team, values)
+   ================================================================ */
 .brand-story { background: var(--cream); }
 .story-grid {
   display: grid;
@@ -1059,7 +1161,9 @@ footer {
 }
 .value-tile p { font-size: 0.88rem; line-height: 1.75; color: var(--sand); }
 
-/* ─── CONTACT PAGE ─── */
+/* ================================================================
+   21. CONTACT PAGE
+   ================================================================ */
 .contact-hero { background: var(--charcoal); padding: 160px 40px 100px; text-align: center; }
 .contact-hero h1 {
   font-family: 'Cormorant Garamond', serif;
@@ -1087,7 +1191,9 @@ footer {
 }
 .social-link:hover { opacity: 0.7; }
 
-/* ─── EXPERIENCE PAGE ─── */
+/* ================================================================
+   22. EXPERIENCE PAGE (philosophy, offerings, quotes, hosts)
+   ================================================================ */
 .exp-philosophy { background: var(--cream); }
 .philosophy-grid {
   display: grid;
@@ -1143,29 +1249,7 @@ footer {
   text-align: center;
 }
 
-/* ─── FOOTER LOGO IMAGE ─── */
-.footer-logo-img {
-  max-width: 270px;
-  max-height: 90px;
-  width: auto;
-  height: auto;
-  display: block;
-  margin-bottom: 14px;
-  opacity: 0.88;
-}
-
-/* ─── HERO BRAND WATERMARK ─── */
-.hero-brand-mark {
-  width: 110px;
-  height: auto;
-  opacity: 0.65;
-  margin-top: 28px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ─── PHILOSOPHY / HOSTS SECTIONS ─── */
+/* philosophy banner image */
 .philosophy-banner {
   width: 100%;
   max-height: 420px;
@@ -1175,6 +1259,7 @@ footer {
   margin-bottom: 0;
 }
 
+/* hosts section */
 .hosts-section { background: var(--cream); }
 .hosts-grid {
   display: grid;
@@ -1194,13 +1279,18 @@ footer {
   display: block;
 }
 
-/* ─── RESPONSIVE ─── */
+/* ================================================================
+   23. RESPONSIVE — 1024px and below
+   ================================================================ */
 @media (max-width: 1024px) {
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
   .overview-grid { grid-template-columns: 1fr; }
   .facts-card { position: static; }
 }
 
+/* ================================================================
+   24. RESPONSIVE — 768px and below
+   ================================================================ */
 @media (max-width: 768px) {
   nav { padding: 8px 24px; }
   .nav-links { display: none; }
@@ -1238,6 +1328,9 @@ footer {
   .hosts-grid { grid-template-columns: 1fr; }
 }
 
+/* ================================================================
+   25. RESPONSIVE — 480px and below
+   ================================================================ */
 @media (max-width: 480px) {
   .categories-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { grid-template-columns: 1fr; }
