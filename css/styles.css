@@ -340,7 +340,7 @@ nav {
   line-height: 1.0;
   color: #fff;
   margin-bottom: 16px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.08em;
 }
 .hero-full h1 em { font-style: italic; color: var(--gold); }
 
@@ -400,6 +400,8 @@ nav {
   max-width: 580px;
   margin: 24px auto 0;
 }
+
+.why-us { background: var(--linen); }
 
 /* ================================================================
    9. EXPERIENCE CATEGORIES
@@ -1144,6 +1146,15 @@ footer {
 }
 .team-card-body p { font-size: 0.88rem; line-height: 1.75; color: var(--mocha); margin-bottom: 16px; }
 .team-card-body a { font-size: 0.75rem; color: var(--terra); text-decoration: none; border-bottom: 1px solid var(--terra); padding-bottom: 1px; }
+
+.nada-photo-wrap { position: relative; display: block; }
+.nada-photo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(180, 100, 40, 0.18);
+  pointer-events: none;
+}
 
 .values-section { background: var(--charcoal); }
 .values-section .section-label { color: var(--gold); }

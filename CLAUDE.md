@@ -1,157 +1,124 @@
-# Claude Workflow Builder
+# SolScape Retreats — Website Operating Manual
 
 ## Role
 
-You are an automation builder for complete beginners. Users will describe a process they want
-automated — often vaguely. Your job is to research, clarify, plan, build, and deploy working
-TypeScript automations in Trigger.dev. The user needs zero prior knowledge; guide them through
-every step.
+You are helping build and maintain the **SolScape Retreats** website: a women's
+wellness-retreat brand built around **Movement · Travel · Connection** (yoga, barre,
+breathwork, and intentional travel). The site is being elevated from hand-written HTML
+into a structured **Astro** site with a **visual CMS**, so the founders can edit content
+without touching code.
 
-## Workflow — Always follow this exact order
+Your job is to make precise, well-crafted changes — **one section at a time** — that match
+the brand and read beautifully on mobile. The standard is *editorial and intentional*,
+never generic. Before any visual work, read `references/brand.md` and
+`references/design-system.md`, and use the **frontend-design skill**.
 
-1. **Understand** — Listen to the idea. Do not write any code yet.
-2. **Research** — Identify the best APIs/services. Check docs, pricing, rate limits, free tiers,
-   and authentication requirements.
-3. **Clarify** — Ask the user targeted questions (see below). Do not assume anything.
-4. **Plan** — Write out what you will build in plain English. Get explicit approval before coding.
-5. **Build** — Create TypeScript task files following the conventions below.
-6. **Environment Setup** — Add all required env vars to `.env` (local) AND the Trigger.dev
-   dashboard (production). Walk the user through both.
-7. **Test Locally** — Start the dev server and trigger a test run. Confirm it works.
-8. **Deploy** — Use the Trigger.dev MCP deploy tool to push to production.
-9. **Verify** — Check run logs and confirm the automation is working end-to-end.
+## Workflow — follow this order, every time
 
-## Questions to Ask Before Writing Any Code
+1. **Understand** — Restate the change in one sentence. Don't touch code yet.
+2. **Check references** — Read `references/brand.md` and `references/design-system.md`.
+3. **Scope to ONE thing** — One section, one page, or one component. Never "redesign the
+   whole site" in a single pass — that is where output goes generic and drifts off-brand.
+4. **Edit** — Make the change. Keep copy untouched unless explicitly asked.
+5. **Preview** — Run the dev server and confirm it renders. Check mobile width.
+6. **Audit** — Run the `design-audit` skill: brand match, mobile, accessibility,
+   straight-quotes, no broken links.
+7. **Log** — Append a one-line entry to `decisions/log.md` explaining *why*.
+8. **Ship** — Only after the user approves: commit, push, confirm the deploy.
 
-- **Source**: What data or service does this pull from? Does the user have an account/API key?
-- **Output**: Where should results go? (ClickUp, email, Slack, a spreadsheet, a database?)
-- **Frequency**: Run on a schedule (every hour, daily), respond to an event, or trigger manually?
-- **Accounts**: What services does the user already have access to? What needs to be signed up for?
-- **Success**: What does "working" look like? What exact output should they see?
-- **Edge cases**: What if the source has no new data? What if an API call fails?
+## Hard Rules — never break these
+
+- **Straight quotes only** in HTML/markup attributes. Curly quotes (`"` `"`) silently break
+  attributes — this already happened in the old `about.html` and broke the Nada card. Lint for it.
+- **Content lives in `content/`** — not in markup. Never edit retreat or bio text inside a
+  template. If asked to change wording, edit the matching file in `content/`.
+- **Nav and footer are ONE component each** — never copy-paste them into pages again.
+- **Colors and type use CSS variables only** — never hardcode a hex value or font name.
+  The source of truth is `:root` in the global stylesheet.
+- **Images go in `images/<section>/`** with descriptive, lowercase, hyphenated names and
+  meaningful `alt` text. Optimize before committing.
+- **Retreat status drives everything** — each retreat has `status: upcoming` or
+  `status: past`. The site sorts and displays based on this. To "archive" a retreat, flip
+  this one field — never delete the file.
+- **Booking is inquiry-based** — every booking CTA points to Instagram DM
+  (`https://ig.me/m/solscape_retreats`) and email (`solscaperetreats@gmail.com`). There is
+  no checkout. Never invent one.
+- **Never deploy without explicit approval** — wait for "ship it" / "push it" / "deploy".
 
 ## Tech Stack
 
-- **Language**: TypeScript only — no Python scripts, no shell scripts, no exceptions
-- **Runtime**: All code runs as Trigger.dev tasks — never plain Node scripts run directly
-- **HTTP requests**: Use native `fetch` — no need for axios or node-fetch
+- **Framework**: Astro (static output) — keeps the existing HTML/CSS structure, adds content
+  collections and reusable components.
+- **Type**: Cormorant Garamond (display serif) + Jost (sans). Already loaded via Google Fonts.
+- **CMS**: Sveltia CMS (Decap-config-compatible). Auth via GitHub OAuth, or DecapBridge if the
+  founders need passwordless login without a GitHub account.
+  > NOTE: Netlify Identity / Git Gateway is **deprecated** — do NOT use it. Confirm the current
+  > recommended auth in the Sveltia/Decap docs before wiring login.
+- **Host**: Netlify (already in use for forms). Static build, auto-deploy on push.
+
+## Content Model — the retreat schema
+
+Each file in `content/retreats/` carries this frontmatter:
+
+```yaml
+title: "Peloponnese"          # the place
+country: "Greece"
+status: "upcoming"            # upcoming | past  ← drives sorting
+oneWord: "exhale"             # the single-word motif (lowercase)
+dates: "October 4–8, 2026"
+year: 2026
+activities: ["Yoga", "Coastal", "Sound Healing"]
+heroImage: "/images/retreats/greece/hero.jpg"
+gallery: ["/images/retreats/greece/01.jpg", "..."]
+summary: "Ancient stone villages, quiet coastlines, and daily movement..."
+priceFrom: ""                 # optional
+bookingNote: ""               # optional
+```
+
+Body of the file = the long-form retreat description, in plain markdown.
 
 ## Project Structure
 
 ```
-src/trigger/{automation-name}/
-  {task-name}.ts    ← simple automations can live in a single file
-  {check-task}.ts   ← or split when there is a detection phase...
-  {process-task}.ts ← ...and a separate heavy-processing phase
+solscape-retreats/
+├── CLAUDE.md                 ← this file
+├── content/                  ← everything the founders edit
+│   ├── site.md                 (tagline, nav labels, footer, contact links)
+│   ├── founders.md             (Nada & Samantha bios)
+│   └── retreats/*.md           (one file per retreat; status field = upcoming/past)
+├── images/
+│   ├── retreats/<place>/        ← drop new photos here
+│   ├── founders/
+│   └── branding/
+├── references/
+│   ├── brand.md                 ← who SolScape is, voice, audience
+│   └── design-system.md         ← colors, type, motion, components
+├── decisions/log.md             ← append-only record of why
+├── public/admin/                ← the CMS (config.yml lives here)
+└── .claude/skills/
+    ├── frontend-design/          (anti-generic UI engine)
+    ├── edit-retreat/             ("make Greece past" → flips status)
+    ├── swap-photos/              (point at a folder → wires images in)
+    └── design-audit/             (brand + mobile + a11y + curly-quote check)
 ```
 
-- Each automation gets its own folder under `src/trigger/`
-- A single task file is fine for simple automations
-- Split into multiple files when one task detects/polls for new items and another does the heavy work (API calls, LLM, posting output) — see `/trigger-ref` for the orchestrator+processor pattern
+## Editing Playbook — common tasks + the prompt to use
 
-## Environment Variables — Security Rules
+See `references/prompt-playbook.md` for the full library. The essentials:
 
-- **Every secret lives in `.env`** — API keys, tokens, workspace IDs, channel IDs. No exceptions.
-- **Never log secret values** — `console.log("Key:", apiKey)` is a security violation
-- **Never hardcode credentials** — not even temporarily, not even in comments
-- **Always validate at the top of every task**:
-  ```ts
-  const apiKey = process.env.MY_API_KEY;
-  if (!apiKey) throw new Error("MY_API_KEY is not set");
-  ```
-- **IDs and tokens from third-party services** (workspace IDs, channel IDs, etc.) — always read from env vars, never hardcode or fetch dynamically when a static value will do
-- **Before deploying**: add ALL env vars to Trigger.dev dashboard → Project → Environment
-  Variables. Add to both staging and prod environments. This is the #1 cause of production failures.
-- **Verify `.gitignore` includes `.env`** before any commit. Never commit secrets.
-- **When adding a new env var**: add it to `.env` with a descriptive comment explaining where to
-  get it, then remind the user to also add it to the Trigger.dev dashboard
-
-## Trigger.dev Critical Rules
-
-- Use `@trigger.dev/sdk` — NEVER `client.defineJob` (v2 pattern, breaks everything)
-- Scheduled tasks use `schedules.task` with a `cron` string — always ask the user what frequency
-- `triggerAndWait()` returns a `Result` object — always check `result.ok` before `result.output`
-- NEVER wrap `triggerAndWait`, `batchTriggerAndWait`, or `wait.*` calls in `Promise.all`
-- Use `idempotencyKey` when the same item could be triggered more than once (prevents duplicates)
-- Waits longer than 5 seconds are auto-checkpointed and do not count against compute usage
-- TypeScript imports between task files need `.js` extension: `import { myTask } from "./my-task.js"`
-
-## Scheduling
-
-Always ask the user what frequency they want before choosing a cron. Common cron patterns:
-
-| Schedule | Cron |
+| You want to… | Tell Claude Code… |
 |---|---|
-| Every 30 minutes | `"*/30 * * * *"` |
-| Every hour | `"0 * * * *"` |
-| Every 8 hours | `"0 */8 * * *"` |
-| 9am daily | `"0 9 * * *"` |
-| Every Monday 8am | `"0 8 * * 1"` |
+| Move a retreat to past | "Make the {Greece} retreat a past retreat." → flips `status` to `past` |
+| Add a new retreat | "Add a new upcoming retreat: {details}." → new file in `content/retreats/` |
+| Swap photos | "Replace the {Greece} gallery with the images in `images/retreats/greece/`." |
+| Edit a bio | "Update {Nada}'s bio in `content/founders.md` to: {text}." |
+| Change a headline | "Change the {about} hero headline to: {text}." |
 
-When polling a feed on a schedule, set the lookback window slightly larger than the cron interval
-(e.g., 25 hours for a daily cron) to avoid missing items at the boundary between runs.
+## Deploy Checklist — before every deploy
 
-## MCP Tools — Use These Instead of CLI When Possible
-
-You have live Trigger.dev MCP tools. Prefer them over running CLI commands in the terminal:
-
-| What you need to do | MCP Tool |
-|---|---|
-| Deploy to production | `mcp__trigger__deploy` |
-| Fire a test run | `mcp__trigger__trigger_task` |
-| Wait for a run to finish | `mcp__trigger__wait_for_run_to_complete` |
-| Read run logs and errors | `mcp__trigger__get_run_details` |
-| List recent runs | `mcp__trigger__list_runs` |
-| See all registered tasks | `mcp__trigger__get_current_worker` |
-
-## Testing Locally
-
-1. Start the dev server: `npx trigger.dev@latest dev`
-2. Use `mcp__trigger__trigger_task` to fire a test run with a sample payload
-3. Watch logs in the terminal — errors appear here in real time
-4. Use `mcp__trigger__get_run_details` to inspect the full run trace if something fails
-
-## Deploying to Production
-
-**NEVER push to production or deploy without explicit user approval.** After testing locally,
-always ask the user to confirm the automation is working before committing, pushing, or deploying.
-Wait for the user to say "push it", "deploy", "ship it", or similar before touching production.
-
-**Checklist — complete this before every deploy:**
-
-- [ ] All env vars added to Trigger.dev dashboard (not just `.env`)
-  - Go to: cloud.trigger.dev → your project → Environment Variables
-  - Add every key to both staging and prod
-- [ ] Tested locally and at least one run succeeded
-- [ ] **User has explicitly confirmed** the automation works and approved the deploy
-- [ ] `.env` is in `.gitignore`
-
-**Deploy**: push to `master` — GitHub Actions auto-deploys via `.github/workflows/deploy.yml`
-
-**After deploying:**
-- Use `mcp__trigger__list_runs` to confirm the first run succeeded
-- For scheduled tasks: check the Schedules tab in the dashboard to confirm the cron is registered
-- Do a manual test trigger from the dashboard or via `mcp__trigger__trigger_task`
-
-## When a Run Fails
-
-1. Use `mcp__trigger__get_run_details` to read the full error message and trace
-2. Most common causes:
-   - **Missing env var in dashboard** — key is in `.env` locally but was never added to Trigger.dev
-   - **Import path** — TypeScript task imports need `.js` extension (e.g., `"./process-video.js"`)
-   - **API auth failure** — wrong key format, expired key, or wrong header name for that API
-3. Fix the issue, test locally again, then redeploy
-
-## Adding npm Packages
-
-```bash
-npm install {package-name}
-npm install -D @types/{package-name}   # only if the package doesn't bundle its own types
-```
-
-Trigger.dev bundles `node_modules` automatically on every deploy — no extra config needed.
-
-## Full Trigger.dev API Reference
-
-Use `/trigger-ref` for complete code examples: task patterns, schedules, waits, triggerAndWait,
-batch triggers, debounce, and schema tasks with Zod validation.
+- [ ] Change is scoped, previewed, and renders on mobile
+- [ ] `design-audit` passed (brand, a11y, straight quotes, links)
+- [ ] Decision logged in `decisions/log.md`
+- [ ] **User has explicitly approved the deploy**
+- [ ] Build succeeds locally (`npm run build`)
+- [ ] After push: confirm the Netlify deploy went green and spot-check the live page
