@@ -1,72 +1,8 @@
 ---
+import Layout from '../../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 ---
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exotic Retreat — SolScape Retreats</title>
-  <meta name="description" content="A stunning location, off the beaten track. Our most expansive retreat yet — details coming soon.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-
-  <!-- ============================================================
-       SECTION: Navigation
-       ============================================================ -->
-  <nav>
-    <a href="/" class="logo">
-      <img src="/images/branding/solscape-logo.png" alt="SolScape Retreats" class="logo-img">
-    </a>
-    <ul class="nav-links">
-      <li class="nav-item has-dropdown">
-        <a href="/#retreats">Retreats</a>
-        <ul class="dropdown">
-          <li><a href="/retreats/greece">Greece</a></li>
-          <li><a href="/retreats/kenya">Kenya</a></li>
-          <li><a href="/retreats/egypt-nile">Luxor Aswan</a></li>
-          <li><a href="/retreats/morocco">Morocco</a></li>
-          <li><a href="/retreats/provence">Provence</a></li>
-          <li><a href="/retreats/geneva">Geneva</a></li>
-          <li><a href="/retreats/exotic">Exotic — TBA</a></li>
-        </ul>
-      </li>
-      <li class="nav-item"><a href="/experience">Experience</a></li>
-      <li class="nav-item"><a href="/about">About</a></li>
-      <li class="nav-item"><a href="/contact">Contact</a></li>
-    </ul>
-    <div class="nav-actions">
-      <a href="https://www.instagram.com/solscape_retreats/" target="_blank" class="nav-insta" aria-label="Instagram" rel="noopener noreferrer">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-        </svg>
-      </a>
-      <a href="https://ig.me/m/solscape_retreats" target="_blank" class="nav-cta" rel="noopener noreferrer">Book Now</a>
-    </div>
-    <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </nav>
-
-  <!-- ============================================================
-       SECTION: Mobile Menu
-       ============================================================ -->
-  <div class="mobile-menu">
-    <ul>
-      <li><a href="/retreats/greece">Greece</a></li>
-      <li><a href="/retreats/kenya">Kenya</a></li>
-      <li><a href="/retreats/egypt-nile">Luxor Aswan</a></li>
-      <li><a href="/retreats/morocco">Morocco</a></li>
-      <li><a href="/retreats/provence">Provence</a></li>
-      <li><a href="/retreats/geneva">Geneva</a></li>
-      <li><a href="/retreats/exotic">Exotic — TBA</a></li>
-      <li><a href="/experience">Experience</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/contact">Contact</a></li>
-    </ul>
-    <a href="https://ig.me/m/solscape_retreats" target="_blank" class="btn btn-primary" rel="noopener noreferrer">Book Now</a>
-  </div>
+<Layout title="Exotic Retreat — SolScape Retreats" description="A stunning location, off the beaten track. Our most expansive retreat yet — details coming soon.">
 
   <!-- ============================================================
        SECTION: Hero
@@ -77,7 +13,7 @@
     <div class="hero-content">
       <p class="sub">Destination TBA</p>
       <h1>Exotic<br><em>Retreat</em></h1>
-      <img src="/images/branding/solscape-logo.png" class="hero-brand-mark" alt="SolScape">
+      <img src={`${base}/images/branding/solscape-logo.png`} class="hero-brand-mark" alt="SolScape">
     </div>
   </div>
 
@@ -126,7 +62,7 @@
             <p class="card-theme-name">exhale</p>
             <p class="card-dates"><span class="card-status-dot"></span>Upcoming — October 4–8, 2026</p>
             <p class="card-desc">Ancient stone villages, quiet coastlines, and daily movement where the mountains meet the sea.</p>
-            <a href="/retreats/greece" class="card-link">Retreat details →</a>
+            <a href={`${base}/retreats/greece`} class="card-link">Retreat details →</a>
           </div>
         </div>
         <div class="card">
@@ -137,68 +73,11 @@
             <p class="card-theme-name">reflection</p>
             <p class="card-dates"><span class="card-status-dot"></span>Upcoming</p>
             <p class="card-desc">Alpine air, mountain stillness, and restorative movement shaped by the rhythm of summer in the Alps.</p>
-            <a href="/retreats/geneva" class="card-link">Retreat details →</a>
+            <a href={`${base}/retreats/geneva`} class="card-link">Retreat details →</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============================================================
-       SECTION: Footer
-       ============================================================ -->
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="/images/branding/solscape-logo.png" class="footer-logo-img" alt="SolScape Retreats">
-        <p class="footer-tagline">Retreats in the world's most beautiful places.</p>
-      </div>
-      <div class="footer-col">
-        <h5>Retreats</h5>
-        <ul>
-          <li><a href="/retreats/greece">Greece</a></li>
-          <li><a href="/retreats/kenya">Kenya</a></li>
-          <li><a href="/retreats/morocco">Morocco</a></li>
-          <li><a href="/retreats/provence">Provence</a></li>
-          <li><a href="/retreats/geneva">Geneva</a></li>
-          <li><a href="/retreats/exotic">Exotic — TBA</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Explore</h5>
-        <ul>
-          <li><a href="/experience">The Experience</a></li>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Connect</h5>
-        <ul>
-          <li><a href="https://www.instagram.com/solscape_retreats/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-          <li><a href="https://ig.me/m/solscape_retreats" target="_blank" rel="noopener noreferrer">DM to Book</a></li>
-          <li><a href="/contact">Newsletter</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2026 SolScape Retreats &nbsp;·&nbsp; All rights reserved</p>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/solscape_retreats/" target="_blank" aria-label="Instagram" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-          </svg>
-        </a>
-        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=solscaperetreats@gmail.com" target="_blank" aria-label="Email" rel="noopener noreferrer">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <polyline points="2,4 12,13 22,4"/>
-          </svg>
-        </a>
-      </div>
-    </div>
-  </footer>
-
-  <script is:inline src="/js/main.js"></script>
-</body>
-</html>
+</Layout>
