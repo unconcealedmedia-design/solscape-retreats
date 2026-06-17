@@ -1,10 +1,12 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://unconcealedmedia-design.github.io',
-  base: '/solscape-retreats',
+  site: 'https://solscaperetreats.com',
+  base: '/',
   output: 'static',
   build: {
     format: 'file',
   },
+  integrations: [sitemap()],
 });

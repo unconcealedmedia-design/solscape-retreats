@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 ---
 <Layout title="About — SolScape Retreats" description="SolScape was built by Nada and Samantha — two women who couldn't find the retreat they were looking for, so they made it themselves.">
 

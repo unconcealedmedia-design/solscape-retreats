@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://solscaperetreats.com/sitemap-index.xml
