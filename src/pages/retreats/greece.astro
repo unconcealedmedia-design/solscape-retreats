@@ -1,6 +1,70 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
+
+// Room galleries — image files live in /images/greece/rooms/<slug>/.
+// Paths are built base-aware below so they survive the GitHub Pages sub-path,
+// then serialized into a data attribute the shared lightbox reads at runtime.
+const rooms = [
+  {
+    name: 'Suite with Sea View',
+    slug: 'suite-sea-view',
+    images: [
+      { file: '1.webp', alt: 'Suite with Sea View — twin bedroom with sea view at Brazzo di Maina' },
+      { file: '2.webp', alt: 'Suite with Sea View — second view of the twin bedroom' },
+      { file: 'bathroom.webp', alt: 'Suite with Sea View — en-suite bathroom' },
+    ],
+  },
+  {
+    name: 'Grand Suite with Sea View',
+    slug: 'grand-suite',
+    images: [
+      { file: '1.webp', alt: 'Grand Suite with Sea View — spacious suite with sitting area' },
+      { file: '2.webp', alt: 'Grand Suite with Sea View — second view of the suite' },
+      { file: 'bathroom.webp', alt: 'Grand Suite with Sea View — en-suite bathroom' },
+    ],
+  },
+  {
+    name: 'Premium Suite with Jetted Tub & Sea View',
+    slug: 'premium-suite',
+    images: [
+      { file: '1.webp', alt: 'Premium Suite — indoor living space with jetted tub and sea view' },
+      { file: 'bathroom.webp', alt: 'Premium Suite — bathroom' },
+      { file: 'outdoor.webp', alt: 'Premium Suite — private outdoor area' },
+    ],
+  },
+  {
+    name: 'Executive Suite with Sea View',
+    slug: 'executive-suite',
+    images: [
+      { file: '1.webp', alt: 'Executive Suite — two-bedroom suite with sea view' },
+      { file: '2.webp', alt: 'Executive Suite — second view of the suite' },
+      { file: '3.webp', alt: 'Executive Suite — living area' },
+      { file: '4.webp', alt: 'Executive Suite — additional view' },
+    ],
+  },
+];
+
+// Build a base-aware gallery payload for a room (consumed by the lightbox JS).
+const roomGallery = (room) => JSON.stringify({
+  name: room.name,
+  images: room.images.map((im) => ({
+    src: `${base}/images/greece/rooms/${room.slug}/${im.file}`,
+    alt: im.alt,
+  })),
+});
+
+// "The Property" gallery — pool and dining shots.
+const property = [
+  { file: 'pool-1.webp', alt: 'Outdoor pool area at Brazzo di Maina, looking toward the sea' },
+  { file: 'pool-2.webp', alt: 'Outdoor pool area with loungers and Mediterranean greenery' },
+  { file: 'pool-3.webp', alt: 'Outdoor pool area at golden hour' },
+  { file: 'dining-1.webp', alt: 'Outdoor dining area set for a shared Mediterranean meal' },
+];
+const propertyGallery = JSON.stringify({
+  name: 'The Property',
+  images: property.map((p) => ({ src: `${base}/images/greece/property/${p.file}`, alt: p.alt })),
+});
 ---
 <Layout title="Greece Retreat — SolScape Retreats" description="Five days on the coast of the Peloponnese — yoga, barre, nourishing meals, and time to explore at a relaxed pace. Mani, September 27 – October 1, 2026.">
 
@@ -8,7 +72,7 @@ const base = import.meta.env.BASE_URL;
        SECTION: Hero
        ============================================================ -->
   <div class="detail-hero">
-    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1920&q=80');"></div>
+    <div class="hero-bg" style={`background-image: url('${base}/images/greece/property/pool-3.webp');`}></div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="sub">Peloponnese &nbsp;·&nbsp; Greece</p>
@@ -65,6 +129,27 @@ const base = import.meta.env.BASE_URL;
             <a href="#booking" class="btn btn-primary">Enquire Now</a>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: The Property
+       ============================================================ -->
+  <section style="background: var(--cream);">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+        <p class="section-label">The Property</p>
+        <h2 class="section-title">Brazzo di <em>Maina</em></h2>
+        <div class="divider" style="margin: 28px auto;"></div>
+        <p style="font-size: 0.95rem; line-height: 1.9; color: var(--mocha);">A quiet stone retreat above the Mani coast — a sea-facing pool, shaded terraces, and a long table set for slow, shared meals.</p>
+      </div>
+      <div class="property-gallery" data-gallery={propertyGallery}>
+        {property.map((p, i) => (
+          <button type="button" class="property-item js-gallery-open" data-start={i} aria-label={`Open photo: ${p.alt}`}>
+            <img src={`${base}/images/greece/property/${p.file}`} alt={p.alt} loading="lazy">
+          </button>
+        ))}
       </div>
     </div>
   </section>
@@ -160,28 +245,36 @@ const base = import.meta.env.BASE_URL;
       <h2 class="section-title">Choose your <em>room</em></h2>
       <div class="offerings-grid" style="margin-top: 48px;">
         <div class="offering-card">
+          <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[0].slug}/${rooms[0].images[0].file}`} alt={rooms[0].images[0].alt} loading="lazy">
           <h3>Suite with Sea View</h3>
           <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Sharing €1,590 pp</p>
           <p style="margin-bottom: 14px;"><span class="tag">2 rooms</span></p>
           <p>Twin beds. Perfect for friends sharing. Two equal twin beds, sea views, traditional Mani architecture.</p>
+          <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[0])}>View Room <span aria-hidden="true">→</span></button>
         </div>
         <div class="offering-card">
+          <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[1].slug}/${rooms[1].images[0].file}`} alt={rooms[1].images[0].alt} loading="lazy">
           <h3>Grand Suite with Sea View</h3>
           <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Sharing €1,890 pp &nbsp;/&nbsp; Single €2,490 pp</p>
           <p style="margin-bottom: 14px;"><span class="tag">2 rooms</span></p>
           <p>Spacious 50 sqm suite with sea views, sitting area, private balcony, and sofa-bed option.</p>
+          <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[1])}>View Room <span aria-hidden="true">→</span></button>
         </div>
         <div class="offering-card">
+          <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[2].slug}/${rooms[2].images[0].file}`} alt={rooms[2].images[0].alt} loading="lazy">
           <h3>Premium Suite with Jetted Tub &amp; Sea View</h3>
           <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Sharing €1,990 pp &nbsp;/&nbsp; Single €2,590 pp</p>
           <p style="margin-bottom: 14px;"><span class="tag">5 rooms</span></p>
           <p>Our most spacious accommodation, featuring a private jetted tub, sea views, and generous indoor living space.</p>
+          <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[2])}>View Room <span aria-hidden="true">→</span></button>
         </div>
         <div class="offering-card">
+          <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[3].slug}/${rooms[3].images[0].file}`} alt={rooms[3].images[0].alt} loading="lazy">
           <h3>Executive Suite with Sea View, 2 Bedrooms</h3>
           <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Double occupancy (twin beds) €2,150 pp &nbsp;/&nbsp; Exclusive 2-guest occupancy €2,690 pp</p>
           <p style="margin-bottom: 14px;"><span class="tag">1 room</span></p>
           <p>A spacious 60 sqm suite featuring two bedrooms, two bathrooms, sea views, a kitchen, and a shared living area.</p>
+          <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[3])}>View Room <span aria-hidden="true">→</span></button>
         </div>
       </div>
       <p style="font-size: 0.84rem; color: var(--mocha); margin-top: 64px; text-align: center;">Room allocation is offered on a first-come, first-served basis.</p>
