@@ -952,10 +952,12 @@ footer {
   width: 110px;
   height: auto;
   opacity: 0.65;
-  margin-top: 28px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 24px;
 }
 
 /* Overview 2-col */
@@ -1337,6 +1339,19 @@ footer {
 
   .contact-hero { padding: 120px 24px 80px; }
   .hosts-grid { grid-template-columns: 1fr; }
+
+  /* keep the hero text block from overflowing the viewport so the
+     date badge wraps instead of being clipped by overflow:hidden.
+     min-width:0 lets the flex item shrink below its max-content width
+     (the single-line badge), which the default min-width:auto blocks. */
+  .detail-hero .hero-content { min-width: 0; max-width: 100%; }
+  .dates-badge {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    line-height: 1.7;
+    white-space: normal;
+  }
 }
 
 /* ================================================================
