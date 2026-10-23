@@ -1,5 +1,9 @@
 .DS_Store
 Thumbs.db
+desktop.ini
+**/desktop.ini
+# Loose images dropped in the repo root (leading slash = root only; public/images stays tracked)
+/*.jpg
 *.env
 .env*
 *.pem
