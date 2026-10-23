@@ -8,5 +8,9 @@ export default defineConfig({
   build: {
     format: 'file',
   },
+  // Archived retreats move under /retreats/past/; keep their old URLs working.
+  redirects: {
+    '/retreats/greece': '/retreats/past/greece',
+  },
   integrations: [sitemap()],
 });

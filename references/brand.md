@@ -35,7 +35,7 @@ They built SolScape because they couldn't find the retreat they wanted, so they 
 ## Destinations
 
 - **Run so far:** Egypt, Greece, Tuscany, Spain (past 3 years).
-- **Upcoming (current site):** Greece (Oct 2026), Kenya (Nov 2026), Egypt/Nile (Jan 2027),
+- **Upcoming (current site):** Kenya (Nov 2026), Egypt/Nile (Jan 2027),
   Morocco (Feb 2027), Provence (Apr 2027), Geneva (Jul 2027), plus an "Exotic — TBA" teaser.
 - Each retreat carries a one-word motif: *exhale, wander, rooted, reflection, expansive…*
   (Keep these lowercase and consistent — the old site had a stray "SoFen" placeholder and mixed

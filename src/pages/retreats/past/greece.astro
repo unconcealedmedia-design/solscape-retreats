@@ -1,5 +1,6 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../../layouts/Layout.astro';
+import RetreatGallery from '../../../components/RetreatGallery.astro';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 
 // Room galleries — image files live in /images/greece/rooms/<slug>/.
@@ -77,7 +78,7 @@ const propertyGallery = JSON.stringify({
     <div class="hero-content">
       <p class="sub">The Mani Peninsula &nbsp;·&nbsp; Greece</p>
       <h1>Mani<br>Retreat</h1>
-      <div class="dates-badge">September 27 – October 1, 2026 &nbsp;·&nbsp; 4 Nights</div>
+      <div class="dates-badge">September 27 – October 1, 2026 &nbsp;·&nbsp; Retreat Complete</div>
       <img src={`${base}/images/branding/solscape-logo.png`} class="hero-brand-mark" alt="SolScape">
     </div>
   </div>
@@ -93,7 +94,6 @@ const propertyGallery = JSON.stringify({
           <h2 class="section-title">Between the sea and the <em>timeless landscape</em></h2>
           <div class="divider"></div>
           <p>Five days on the coast, designed to create space for movement, rest, connection, and exploration. Each day combines yoga, barre, nourishing meals, and time to experience the surrounding landscape at a relaxed pace.</p>
-          <p>Whether you're coming alone or with a friend, this retreat is designed to meet you where you are. No prior yoga or barre experience is required.</p>
         </div>
         <div>
           <div class="facts-card">
@@ -111,10 +111,6 @@ const propertyGallery = JSON.stringify({
               <span class="fact-value">The Mani Peninsula, Greece</span>
             </div>
             <div class="fact-row">
-              <span class="fact-label">Price</span>
-              <span class="fact-value">€1,590 – €2,690 pp</span>
-            </div>
-            <div class="fact-row">
               <span class="fact-label">Level</span>
               <span class="fact-value">All levels welcome</span>
             </div>
@@ -124,14 +120,21 @@ const propertyGallery = JSON.stringify({
             </div>
             <div class="fact-row">
               <span class="fact-label">Status</span>
-              <span class="fact-value" style="color: var(--terra); font-weight: 500;">Now open for booking</span>
+              <span class="fact-value" style="color: var(--mocha);">Complete</span>
             </div>
-            <a href="#booking" class="btn btn-primary">Enquire Now</a>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- ============================================================
+       SECTION: Retreat Gallery — photos from the retreat itself.
+       List: content/retreat-galleries/greece.json
+       Files: public/images/greece/retreat-gallery/
+       Hidden on the live site until the first photo is listed.
+       ============================================================ -->
+  <RetreatGallery retreat="greece" place="the Mani" />
 
   <!-- ============================================================
        SECTION: The Property
@@ -237,63 +240,37 @@ const propertyGallery = JSON.stringify({
   </section>
 
   <!-- ============================================================
-       SECTION: Accommodation & Pricing
+       SECTION: Accommodation
        ============================================================ -->
   <section style="background: var(--linen);">
     <div class="container">
-      <p class="section-label">Accommodation &amp; Pricing</p>
-      <h2 class="section-title">Choose your <em>room</em></h2>
+      <p class="section-label">Accommodation</p>
+      <h2 class="section-title">Where we <em>stayed</em></h2>
       <div class="offerings-grid" style="margin-top: 48px;">
         <div class="offering-card">
           <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[0].slug}/${rooms[0].images[0].file}`} alt={rooms[0].images[0].alt} loading="lazy">
           <h3>Suite with Sea View</h3>
-          <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Sharing €1,590 pp</p>
-          <p style="margin-bottom: 14px;"><span class="tag">2 rooms</span></p>
           <p>Twin beds. Perfect for friends sharing. Two equal twin beds, sea views, traditional Mani architecture.</p>
           <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[0])}>View Room <span aria-hidden="true">→</span></button>
         </div>
         <div class="offering-card">
           <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[1].slug}/${rooms[1].images[0].file}`} alt={rooms[1].images[0].alt} loading="lazy">
           <h3>Grand Suite with Sea View</h3>
-          <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Sharing €1,890 pp &nbsp;/&nbsp; Single €2,490 pp</p>
-          <p style="margin-bottom: 14px;"><span class="tag">2 rooms</span></p>
           <p>Spacious 50 sqm suite with sea views, sitting area, private balcony, and sofa-bed option.</p>
           <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[1])}>View Room <span aria-hidden="true">→</span></button>
         </div>
         <div class="offering-card">
           <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[2].slug}/${rooms[2].images[0].file}`} alt={rooms[2].images[0].alt} loading="lazy">
           <h3>Premium Suite with Jetted Tub &amp; Sea View</h3>
-          <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Sharing €1,990 pp &nbsp;/&nbsp; Single €2,590 pp</p>
-          <p style="margin-bottom: 14px;"><span class="tag">5 rooms</span></p>
           <p>Our most spacious accommodation, featuring a private jetted tub, sea views, and generous indoor living space.</p>
           <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[2])}>View Room <span aria-hidden="true">→</span></button>
         </div>
         <div class="offering-card">
           <img class="room-thumb" src={`${base}/images/greece/rooms/${rooms[3].slug}/${rooms[3].images[0].file}`} alt={rooms[3].images[0].alt} loading="lazy">
           <h3>Executive Suite with Sea View, 2 Bedrooms</h3>
-          <p style="color: var(--terra); font-size: 0.95rem; margin-bottom: 10px;">Double occupancy (twin beds) €2,150 pp &nbsp;/&nbsp; Exclusive 2-guest occupancy €2,690 pp</p>
-          <p style="margin-bottom: 14px;"><span class="tag">1 room</span></p>
           <p>A spacious 60 sqm suite featuring two bedrooms, two bathrooms, sea views, a kitchen, and a shared living area.</p>
           <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[3])}>View Room <span aria-hidden="true">→</span></button>
         </div>
-      </div>
-      <p style="font-size: 0.84rem; color: var(--mocha); margin-top: 64px; text-align: center;">Room allocation is offered on a first-come, first-served basis.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       SECTION: Payment & Booking
-       ============================================================ -->
-  <section id="booking" style="background: var(--cream);">
-    <div class="container" style="max-width: 760px;">
-      <p class="section-label">Payment &amp; Booking</p>
-      <h2 class="section-title">Securing your <em>place</em></h2>
-      <p style="font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); font-weight: 500; margin: 4px 0 8px;">Now open for booking</p>
-      <div class="divider"></div>
-      <p style="font-size: 0.95rem; line-height: 1.9; color: var(--mocha); margin-bottom: 32px;">A 50% non-refundable deposit is required to secure your place. The remaining balance is due by July 29, 2026. As accommodations and retreat arrangements are secured in advance and spaces are limited, all payments made toward the retreat are non-refundable. Should you be unable to attend, you may transfer your booking to another guest, subject to approval by SolScape Retreats. We strongly recommend purchasing travel insurance to protect against unforeseen circumstances. By making a payment, you acknowledge and accept these terms.</p>
-      <div style="display: flex; gap: 14px; flex-wrap: wrap;">
-        <a href="https://ig.me/m/solscape_retreats" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Message us on Instagram</a>
-        <a href="mailto:solscaperetreats@gmail.com?subject=Retreat%20Enquiry" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Email us</a>
       </div>
     </div>
   </section>
@@ -301,7 +278,7 @@ const propertyGallery = JSON.stringify({
   <!-- ============================================================
        SECTION: Other Retreats
        ============================================================ -->
-  <section class="other-retreats" style="background: var(--linen);">
+  <section class="other-retreats">
     <div class="container">
       <p class="section-label">More Destinations</p>
       <h2 class="section-title">Explore other <em>retreats</em></h2>

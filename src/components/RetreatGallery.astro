@@ -1,0 +1,65 @@
+---
+// Retreat Gallery — photos taken DURING a past retreat (not the venue's
+// property/room shots). Drop onto any past-retreat page, after the Overview:
+//   <RetreatGallery retreat="greece" place="the Mani" />
+// Photo list:  content/retreat-galleries/<retreat>.json — display order; with
+//              3+ photos the first becomes the large lead frame.
+// Photo files: public/images/<retreat>/retreat-gallery/
+// How-to:      content/retreat-galleries/README.md
+// With no photos listed the section is hidden on the live site; the dev server
+// shows a placeholder so its position stays visible while building.
+// Tiles open the shared lightbox in public/js/main.js (data-gallery contract).
+import fs from 'node:fs';
+import path from 'node:path';
+
+const { retreat, place = 'the retreat' } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+
+const lists = import.meta.glob('/content/retreat-galleries/*.json', { eager: true, import: 'default' });
+const listPath = `content/retreat-galleries/${retreat}.json`;
+const photos = lists[`/${listPath}`]?.photos ?? [];
+
+// A bad entry stops the build with a clear message rather than shipping a
+// broken image or a photo without alt text.
+for (const p of photos) {
+  const where = `${listPath} → "${p.file ?? '(no file)'}"`;
+  if (!/^[a-z0-9-]+\.(webp|jpe?g|png)$/.test(p.file ?? '')) {
+    throw new Error(`${where}: name photos in lowercase-hyphenated form, e.g. sunrise-yoga-terrace.webp`);
+  }
+  if (typeof p.alt !== 'string' || !p.alt.trim()) {
+    throw new Error(`${where}: alt text is required — describe what the photo shows`);
+  }
+  if (!fs.existsSync(path.join(process.cwd(), 'public', 'images', retreat, 'retreat-gallery', p.file))) {
+    throw new Error(`${where}: file not found in public/images/${retreat}/retreat-gallery/`);
+  }
+}
+
+const images = photos.map((p) => ({
+  src: `${base}/images/${retreat}/retreat-gallery/${p.file}`,
+  alt: p.alt.trim(),
+}));
+const gallery = JSON.stringify({ name: `Moments from ${place}`, images });
+const show = images.length > 0 || import.meta.env.DEV;
+---
+{show && (
+  <section class="retreat-gallery-section">
+    <div class="container">
+      <div class="retreat-gallery-head">
+        <p class="section-label">Retreat Gallery</p>
+        <h2 class="section-title">Moments from <em>{place}</em></h2>
+        <div class="divider"></div>
+      </div>
+      {images.length > 0 ? (
+        <div class={`retreat-gallery${images.length >= 3 ? ' has-lead' : ''}`} data-gallery={gallery}>
+          {images.map((im, i) => (
+            <button type="button" class="retreat-gallery-item js-gallery-open" data-start={i} aria-label={`Open photo: ${im.alt}`}>
+              <img src={im.src} alt={im.alt} loading="lazy">
+            </button>
+          ))}
+        </div>
+      ) : (
+        <p class="retreat-gallery-empty">Retreat Gallery placeholder — dev only, hidden on the live site.<br>List photos in {listPath} (files in public/images/{retreat}/retreat-gallery/).</p>
+      )}
+    </div>
+  </section>
+)}
