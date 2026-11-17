@@ -9,8 +9,10 @@ export default defineConfig({
     format: 'file',
   },
   // Archived retreats move under /retreats/past/; keep their old URLs working.
+  // Kenya was removed (2026-11-17); its old URL lands on the upcoming grid.
   redirects: {
     '/retreats/greece': '/retreats/past/greece',
+    '/retreats/kenya': '/#retreats',
   },
   integrations: [sitemap()],
 });

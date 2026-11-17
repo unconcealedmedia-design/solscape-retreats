@@ -1,0 +1,371 @@
+---
+import Layout from '../../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
+
+// PHOTOS — Aethos Monterosa photos live in public/images/winter-wonderland/:
+//   hero.webp            → the hero below
+//   property/*.webp      → the "Where You'll Stay" gallery (the `property` list)
+//   rooms/deluxe/*.webp  → the Deluxe Room card + "View Room" (the `room` list)
+// property/hotel-exterior-pool-snow.webp is also the banner on the homepage card
+// and on the "Explore other retreats" strip cards (index, egypt-nile,
+// past/greece, past/croatia). Paths are built base-aware so they survive the
+// GitHub Pages sub-path, then serialized into data attributes the shared
+// lightbox (public/js/main.js) reads at runtime.
+const heroImage = `${base}/images/winter-wonderland/hero.webp`;
+
+// "Where You'll Stay" gallery, in display order (4 across on desktop, 2 on
+// mobile — keep it at 4 or 8). `pos` nudges a tile's crop (object-position)
+// where the centre crop would cut the subject; the lightbox shows the full frame.
+const property = [
+  { file: 'hotel-exterior-pool-snow.webp', alt: 'Aethos Monterosa in deep snow, with the outdoor pool in front and snowy peaks behind' },
+  { file: 'hotel-lounge.webp', alt: 'The hotel lounge: leather sofas, marble tables, a wood-burning fireplace and shelves of books' },
+  { file: 'hotel-facade-snow.webp', alt: "The hotel's timber facade, with two chairs on a small terrace in the snow" },
+  { file: 'climbing-wall-lounge.webp', alt: 'A leather sofa in the concrete lounge, with the climbing wall behind glass' },
+  { file: 'spa-indoor-pool.webp', alt: 'The indoor pool, with sunlight through floor-to-ceiling windows' },
+  { file: 'gondola-monterosa.webp', alt: 'Gondola cabins above the snow, with a mountain peak behind', pos: '72% 50%' },
+  { file: 'yoga-room.webp', alt: "The hotel's yoga studio: pale-wood wall bars and mats laid out with rolled towels" },
+  { file: 'champoluc-village.webp', alt: 'Champoluc under snow, the parish church tower among the chalets' },
+];
+const propertyGallery = JSON.stringify({
+  name: 'Aethos Monterosa',
+  images: property.map((p) => ({ src: `${base}/images/winter-wonderland/property/${p.file}`, alt: p.alt })),
+});
+
+// Deluxe Room — the first photo is the card thumbnail; "View Room" opens them all.
+const room = {
+  name: 'The Deluxe Room',
+  images: [
+    { file: 'balcony.webp', alt: 'Deluxe Room — private balcony with two chairs and a small table, looking over snowy firs to the mountains' },
+    { file: 'bathroom.webp', alt: 'Deluxe Room — walk-in shower in green marble, with bathrobes on hooks' },
+  ],
+};
+const roomGallery = JSON.stringify({
+  name: room.name,
+  images: room.images.map((im) => ({ src: `${base}/images/winter-wonderland/rooms/deluxe/${im.file}`, alt: im.alt })),
+});
+---
+<Layout title="Winter Wonderland Retreat — SolScape Retreats" description="Four nights at a MICHELIN Key hotel in the Italian Alps for eight women: daily yoga and barre, a mountain guide, and time that is yours.">
+
+  <!-- ============================================================
+       SECTION: Hero
+       ============================================================ -->
+  <div class="detail-hero">
+    <div class="hero-bg" style={`background-image: url('${heroImage}');`}></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="sub">Champoluc &nbsp;·&nbsp; Italian Alps</p>
+      <h1>Winter<br><em>Wonderland</em></h1>
+      <div class="dates-badge">January 24–28, 2027 &nbsp;·&nbsp; 4 Nights</div>
+      <img src={`${base}/images/branding/solscape-logo.png`} class="hero-brand-mark" alt="SolScape">
+    </div>
+  </div>
+
+  <!-- ============================================================
+       SECTION: Overview
+       ============================================================ -->
+  <section style="background: var(--cream);">
+    <div class="container">
+      <div class="overview-grid">
+        <div class="overview-text">
+          <p class="section-label">Overview</p>
+          <h2 class="section-title">January in the <em>Italian Alps</em></h2>
+          <div class="divider"></div>
+          <p>For four nights, SolScape takes a group of eight women to Aethos Monterosa in Champoluc, beneath the Monte Rosa massif.</p>
+          <p>Mornings start with Yoga and Barre. On two days, a local mountain guide takes the group snowshoeing; on another, the gondola goes up above the village. The rest of the time is yours: the spa, the village, a book in the lounge. Samantha and Nada fully host and curate the retreat in person, from the group pickup at Milan Malpensa to the drop-off.</p>
+        </div>
+        <div>
+          <div class="facts-card">
+            <h4>Retreat at a Glance</h4>
+            <div class="fact-row">
+              <span class="fact-label">Dates</span>
+              <span class="fact-value">January 24–28, 2027</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Duration</span>
+              <span class="fact-value">5 days / 4 nights</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Location</span>
+              <span class="fact-value">Champoluc, Italian Alps</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Venue</span>
+              <span class="fact-value">Aethos Monterosa</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Price</span>
+              <span class="fact-value">€2,590 pp sharing<br>€3,650 single occupancy</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Group Size</span>
+              <span class="fact-value">Limited to 8 women</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Level</span>
+              <span class="fact-value">Options for every level</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Theme</span>
+              <span class="fact-value" style="font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--terra);">inhale</span>
+            </div>
+            <div class="fact-row">
+              <span class="fact-label">Status</span>
+              <span class="fact-value" style="color: var(--terra); font-weight: 500;">Now open for booking</span>
+            </div>
+            <a href="#booking" class="btn btn-primary">Enquire Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: The Experience
+       ============================================================ -->
+  <section style="background: var(--linen);">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto 8px;">
+        <p class="section-label" style="margin-bottom: 20px;">The Experience</p>
+        <h2 class="section-title">Daily Yoga <em>and Barre</em></h2>
+        <div class="divider" style="margin: 28px auto;"></div>
+      </div>
+      <div class="offerings-grid">
+        <div class="offering-card">
+          <h3>Movement</h3>
+          <p>Eight Yoga sessions, four in the mornings and four in the afternoons, and four Barre sessions in the mornings. Options for every level: work hard or keep it gentle. Samantha leads every Yoga session, Nada every Barre.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Snowshoeing</h3>
+          <p>Two outings with a dedicated local guide. One is planned for sunset or early evening, subject to weather and local conditions. Transfers to and from the outings are included.</p>
+        </div>
+        <div class="offering-card">
+          <h3>The Climbing Wall</h3>
+          <p>Climbing-wall access is included. Try it for the first time with an instructor, at extra cost, or watch from the lounge beside it. In winter, the hotel also has an ice-climbing wall on the outside of the building.</p>
+        </div>
+        <div class="offering-card">
+          <h3>The Spa</h3>
+          <p>One hour of spa access each day is included. The spa has a 25-meter indoor pool with floor-to-ceiling windows, a sauna, a steam room, a hot tub and a cold plunge. Massages and treatments can be booked at extra cost.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Champoluc</h3>
+          <p>Champoluc sits at about 1,560 meters in the Val d'Ayas, beneath the Monte Rosa massif. It is a small, quiet ski village of a few hundred residents: no loud apres-ski, just a handful of cafes, boutiques and the parish church at its center. The gondola to Crest leaves from the middle of the village; the group rides it up for the view across the peaks.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Dining</h3>
+          <p>The hotel has two restaurants: 1568, a steakhouse applying Japanese techniques to Italian ingredients, and Summit, for modern Alpine cooking. Breakfast is included every morning, and the hotel's chef prepares four dinners for our group. Lunch is up to you. After dinner, an optional circle: a relaxed space to talk, reflect and share. Come when you like; it is never expected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: Where You'll Stay
+       ============================================================ -->
+  <section style="background: var(--cream);">
+    <div class="container">
+      {/* Text stays in a 760px column for comfortable line length; the gallery runs full width. */}
+      <div style="max-width: 760px;">
+        <p class="section-label">Where You'll Stay</p>
+        <h2 class="section-title">Aethos <em>Monterosa</em></h2>
+        <p style="font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); font-weight: 500; margin: 4px 0 8px;">A MICHELIN Key Hotel</p>
+        <div class="divider"></div>
+        <div class="accom-text">
+          <p>A design hotel in the Val d'Ayas, recognized by the MICHELIN Guide with One MICHELIN Key. It reopened in December 2025 after a redesign by Barcelona's Astet Studio: timber, concrete and glass, two restaurants, a spa with a 25-meter indoor pool, and a climbing wall in the lobby. The ground floor is made for staying in: leather sofas, shelves of books, a fire, and the bar for the hour before dinner.</p>
+        </div>
+      </div>
+      <div class="property-gallery" data-gallery={propertyGallery}>
+        {property.map((p, i) => (
+          <button type="button" class="property-item js-gallery-open" data-start={i} aria-label={`Open photo: ${p.alt}`}>
+            <img src={`${base}/images/winter-wonderland/property/${p.file}`} alt={p.alt} loading="lazy" style={p.pos ? `object-position: ${p.pos};` : undefined}>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: Your Room — one room type, two pricing options
+       ============================================================ -->
+  <section style="background: var(--linen);">
+    <div class="container" style="max-width: 760px;">
+      <p class="section-label">Your Room</p>
+      <h2 class="section-title">The Deluxe <em>Room</em></h2>
+      <div class="offering-card" style="margin-top: 40px;">
+        {/* 16:9 instead of the default 200px height: in this single 760px card a 200px thumb would be a thin strip. */}
+        <img class="room-thumb" src={`${base}/images/winter-wonderland/rooms/deluxe/${room.images[0].file}`} alt={room.images[0].alt} loading="lazy" style="height: auto; aspect-ratio: 16 / 9;">
+        <p>Approx. 30 m², with a double bed, floor-to-ceiling windows, wood paneling, a window seat and a walk-in shower. Every room has a private balcony or loggia, a coffee corner, minibar, bathrobes, slippers and Woods Copenhagen bath products. For two guests sharing one double bed, or single occupancy.</p>
+        <div style="margin-top: 24px;">
+          <div class="fact-row">
+            <span class="fact-label">Sharing</span>
+            <span class="fact-value">€2,590 pp</span>
+          </div>
+          <div class="fact-row">
+            <span class="fact-label">Single occupancy</span>
+            <span class="fact-value">€3,650</span>
+          </div>
+        </div>
+        <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery}>View Room <span aria-hidden="true">→</span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: Your Hosts
+       ============================================================ -->
+  <section style="background: var(--charcoal);">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+        <p class="section-label" style="color: var(--gold);">Your Hosts</p>
+        <h2 class="section-title" style="color: var(--linen);">Led by <em style="color: var(--gold);">Nada &amp; Samantha</em></h2>
+        <div class="divider" style="margin: 28px auto;"></div>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <img src={`${base}/images/team/samantha-hosts.jpg`} class="team-photo" alt="Samantha — Founder, One Yoga Academy">
+          <div class="team-card-body">
+            <h3>Samantha</h3>
+            <p class="team-role">Yoga · Founder of One Yoga Academy</p>
+            <p>Samantha is the founder of One Yoga Academy and an integrative mind-body educator whose work is rooted in over three decades of immersive practice, study, and teaching. Her background spans rhythmic gymnastics, yoga philosophy, contemplative inquiry, somatic exploration, and transpersonal psychology, blending movement, breath, and embodied awareness into practices that support presence, healing, and deeper connection to self. Alongside a Master's degree in Fine Art and Sculpture, her teaching is shaped by both structure and creativity.</p>
+            <a href="https://www.instagram.com/oneyogasamantha/" target="_blank" rel="noopener noreferrer">@oneyogasamantha</a>
+          </div>
+        </div>
+        <div class="team-card">
+          <img src={`${base}/images/team/nada-hosts.jpg`} class="team-photo" alt="Nada — Barre Instructor &amp; Co-Founder">
+          <div class="team-card-body">
+            <h3>Nada</h3>
+            <p class="team-role">Barre · Barre Instructor &amp; Movement Educator</p>
+            <p>Nada brings together years of movement practice, creativity, and a deep interest in how women move, evolve, and reconnect with themselves throughout different stages of life. From ballet and strength training to barre and women's fitness, her teaching is grounded, encouraging, and energizing, focused on helping women feel strong, capable, and comfortable in their own bodies. She is Barre certified with Exhale Spa, New York, a NASM Women's Fitness Specialist, and holds a BS in Marketing.</p>
+            <a href="https://www.instagram.com/forbarre/" target="_blank" rel="noopener noreferrer">@forbarre</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: What's Covered
+       ============================================================ -->
+  <section style="background: var(--cream);">
+    <div class="container">
+      <p class="section-label">What's Covered</p>
+      <h2 class="section-title">What you're <em>booking</em></h2>
+      <p class="section-body">A MICHELIN Key hotel, taught by your hosts, arranged from the airport, and fully hosted and curated from pickup to drop-off.</p>
+      <div class="inc-exc-grid">
+        <div class="inc-list">
+          <h4>Included</h4>
+          <ul>
+            <li>4 nights at Aethos Monterosa in a Deluxe Room</li>
+            <li>Breakfast daily and 4 hotel dinners</li>
+            <li>8 Yoga sessions and 4 Barre sessions</li>
+            <li>Daily one-hour spa access, including sauna</li>
+            <li>Climbing-wall access (instruction extra)</li>
+            <li>2 guided snowshoe outings with a local guide</li>
+            <li>Round-trip scenic gondola experience</li>
+            <li>Shared transfers to and from Milan Malpensa</li>
+            <li>Scheduled local transfers for retreat activities</li>
+            <li>Fully hosted and curated, with evening circles and a welcome gift bag</li>
+          </ul>
+        </div>
+        <div class="exc-list">
+          <h4>Not Included</h4>
+          <ul>
+            <li>Flights, visas and Milan stays</li>
+            <li>Lunches, alcohol, personal purchases and incidentals</li>
+            <li>Massages, treatments, climbing instruction and optional activities</li>
+            <li>Travel insurance (comprehensive cover is recommended)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: Good to Know — FAQ + getting here
+       ============================================================ -->
+  <section style="background: var(--linen);">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto 8px;">
+        <h2 class="section-title">Good to <em>know</em></h2>
+        <div class="divider" style="margin: 28px auto;"></div>
+      </div>
+      <div class="offerings-grid">
+        <div class="offering-card">
+          <h3>Getting Here</h3>
+          <p>Fly into Milan Malpensa, the arrival and departure airport. On January 24, a shared transfer leaves Malpensa at 12:00 from a meeting point we share once you book; the drive to Champoluc is about 2 to 2.5 hours. On January 28, a shared transfer takes the group back. Plan to land in time for the 12:00 pickup. Visa requirements depend on your passport, so please check whether you need a Schengen visa for Italy before booking.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Is it right for my level?</h3>
+          <p>Yes. Every Yoga and Barre session offers options for different levels, with attentive instruction from Samantha and Nada.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Can I come on my own?</h3>
+          <p>Yes. Single occupancy is available, and with a group of eight, you get to know everyone quickly.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Sharing a room?</h3>
+          <p>Shared Deluxe Rooms have one double bed, so sharing suits friends or partners traveling together.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Do I have to join everything?</h3>
+          <p>No. Evening circles are optional, lunches are yours to plan, and the time between activities is free.</p>
+        </div>
+        <div class="offering-card">
+          <h3>Travel insurance</h3>
+          <p>As all payments are non-refundable, we strongly recommend comprehensive cover including trip cancellation, medical and travel disruption.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: Payment & Booking
+       ============================================================ -->
+  <section id="booking" style="background: var(--cream);">
+    <div class="container" style="max-width: 760px;">
+      <p class="section-label">Payment &amp; Booking</p>
+      <h2 class="section-title">Securing your <em>place</em></h2>
+      <p style="font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); font-weight: 500; margin: 4px 0 8px;">Now open for booking</p>
+      <div class="divider"></div>
+      <p style="font-size: 0.95rem; line-height: 1.9; color: var(--mocha); margin-bottom: 32px;">€2,590 per person sharing a double room, or €3,650 single occupancy. A €1,000 non-refundable deposit reserves your place, due by December 1, 2026, with final payment by December 15, 2026. All retreat payments are non-refundable: accommodation and arrangements are secured and paid for in advance, so we strongly recommend comprehensive travel insurance when booking. Limited to eight women. By paying the deposit, you confirm acceptance of these terms.</p>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+        <a href="https://ig.me/m/solscape_retreats" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Message us on Instagram</a>
+        <a href="mailto:solscaperetreats@gmail.com?subject=Winter%20Wonderland%20Enquiry" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Email us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECTION: Other Retreats
+       ============================================================ -->
+  <section class="other-retreats" style="background: var(--linen);">
+    <div class="container">
+      <p class="section-label">More Destinations</p>
+      <h2 class="section-title">Explore other <em>retreats</em></h2>
+      <div class="other-retreat-cards">
+        <div class="card">
+          <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1684100096410-fd39cdff91a3?auto=format&fit=crop&w=1200&q=80');">
+            <div class="card-location"><small>Luxor &amp; Aswan</small>Egypt</div>
+          </div>
+          <div class="card-body">
+            <p class="card-theme-name">drift</p>
+            <p class="card-dates"><span class="card-status-dot"></span>Upcoming</p>
+            <p class="card-desc">A journey along the Nile shaped by movement, ancient history, golden light and life on the water.</p>
+            <a href={`${base}/retreats/egypt-nile`} class="card-link">Retreat details →</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-banner" style="background-image: url('https://images.unsplash.com/photo-1539020140153-e479b8c22e70?auto=format&fit=crop&w=1200&q=80');">
+            <div class="card-location"><small>Atlas Mountains</small>Morocco</div>
+          </div>
+          <div class="card-body">
+            <p class="card-theme-name">rooted</p>
+            <p class="card-dates"><span class="card-status-dot"></span>Upcoming</p>
+            <p class="card-desc">Mountain air, quiet terraces, and movement woven into the warmth of Morocco.</p>
+            <a href={`${base}/retreats/morocco`} class="card-link">Retreat details →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</Layout>
