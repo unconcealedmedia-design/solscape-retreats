@@ -48,20 +48,6 @@
     setInterval(() => goTo((current + 1) % track.children.length), 5500);
   }
 
-  /* ── Newsletter form ── */
-  document.querySelectorAll('.newsletter-form').forEach(form => {
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const input = form.querySelector('input[type="email"]');
-      if (!input || !input.value) return;
-      const success = form.closest('section, .newsletter')?.querySelector('.newsletter-success');
-      form.style.display = 'none';
-      const fine = form.closest('section, .newsletter')?.querySelector('.newsletter-fine');
-      if (fine) fine.style.display = 'none';
-      if (success) success.style.display = 'block';
-    });
-  });
-
   /* ── Inquiry forms — submit to Netlify silently, show success message ── */
   document.querySelectorAll('.inquiry-form').forEach(form => {
     form.addEventListener('submit', async e => {

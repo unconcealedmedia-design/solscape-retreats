@@ -1,5 +1,9 @@
 # SolScape — Prompt Playbook
 
+> **Out of date (2026-11-18):** written before the Astro move. There's no CMS, no content
+> collections and no Netlify; the site deploys to GitHub Pages. Where this file and
+> `CLAUDE.md` disagree, `CLAUDE.md` wins.
+
 > How to talk to Claude Code so changes stay structured, on-brand, and easy. The whole point:
 > the heavy context already lives in your files, so each prompt stays short and never
 > re-explains the brand.

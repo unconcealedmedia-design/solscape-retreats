@@ -2,7 +2,7 @@
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
-const { title, description, showNewsletter = true } = Astro.props;
+const { title, description } = Astro.props;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +29,7 @@ const { title, description, showNewsletter = true } = Astro.props;
 
   <slot />
 
-  <Footer showNewsletter={showNewsletter} />
+  <Footer />
 
   <script is:inline src={`${base}/js/main.js`}></script>
 </body>

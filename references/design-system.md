@@ -54,7 +54,9 @@ gently**, like an exhale:
   → content. Keep this rhythm.
 - **Cards** — retreat cards, value tiles, team cards. Drive retreat cards from `content/`.
 - **CTA band** — `.cta-band` full-width closing call-to-action.
-- **Forms** — newsletter + Netlify contact form, with success states.
+- **Contact CTAs** — no forms (GitHub Pages can't receive them). Use the button pair
+  "Message us on Instagram" (`.btn-primary`) + "Email us" (`.btn-outline` on light
+  sections, `.btn-ghost` on dark).
 
 ## Layout principles
 

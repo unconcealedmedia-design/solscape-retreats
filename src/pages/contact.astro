@@ -2,87 +2,27 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 ---
-<Layout title="Contact — SolScape Retreats" description="Get in touch with SolScape Retreats. Ask a question, register interest, or send an enquiry about upcoming retreats." showNewsletter={false}>
+<Layout title="Contact — SolScape Retreats" description="Get in touch with SolScape Retreats. Ask a question, register interest, or send an enquiry about upcoming retreats.">
 
   <!-- ============================================================
        SECTION: Hero
        ============================================================ -->
   <div class="contact-hero">
     <h1>We'd love to<br><em>hear from you</em></h1>
-    <p>Questions, retreat enquiries, or just curious — reach out and we'll reply within 24 hours.</p>
+    <p>Questions, retreat enquiries, or just curious — reach out and we'll get back to you soon.</p>
   </div>
 
   <!-- ============================================================
-       SECTION: Newsletter
-       ============================================================ -->
-  <section class="newsletter">
-    <h2>Sign up for our<br>newsletter</h2>
-    <p>Be the first to hear about new retreat dates, destinations, and SolScape updates.</p>
-    <form class="newsletter-form" novalidate>
-      <input type="email" placeholder="Your email address" required>
-      <button type="submit">Subscribe</button>
-    </form>
-    <p class="newsletter-fine">We respect your privacy. Unsubscribe anytime.</p>
-    <p class="newsletter-success">You're on the list — we'll be in touch ✦</p>
-  </section>
-
-  <!-- ============================================================
-       SECTION: Contact Form
+       SECTION: Get in touch — Instagram DM + email only.
+       No forms: the site is on GitHub Pages, which can't receive them.
        ============================================================ -->
   <section class="contact-form-section">
-    <div class="container">
-      <div class="form-card" style="margin-top: 0;">
-        <h3>Send a Message</h3>
-        <p>Ask us anything — about a retreat, what to expect, whether it's right for you. No question is too small.</p>
-        <form class="inquiry-form" name="contact" data-netlify="true" novalidate>
-          <input type="hidden" name="form-name" value="contact">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Full Name</label>
-              <input type="text" id="name" name="name" placeholder="Your name" required>
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" id="email" name="email" placeholder="you@email.com" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="tel" id="phone" name="phone" placeholder="+1 (___) ___-____">
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="retreat">I'm interested in…</label>
-            <select id="retreat" name="retreat">
-              <option value="">— Select a retreat —</option>
-              <option value="winter-wonderland">Winter Wonderland — January 2027</option>
-              <option value="morocco">Morocco — February 2027</option>
-              <option value="provence">France Provence — April 2027</option>
-              <option value="geneva">Geneva — July 2027</option>
-              <option value="general">General question</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="message">Your Message</label>
-            <textarea id="message" name="message" placeholder="Tell us what's on your mind…" style="min-height: 140px;"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%; text-align:center;">Send Message</button>
-        </form>
-        <div class="form-success">
-          Thank you for reaching out — we'll be in touch within 24 hours ✦
-        </div>
+    <div class="container" style="max-width: 760px; text-align: center;">
+      <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+        <a href="https://ig.me/m/solscape_retreats" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Message us on Instagram</a>
+        <a href="mailto:solscaperetreats@gmail.com?subject=Retreat%20Enquiry" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Email us</a>
       </div>
-
-      <div class="social-row">
-        <a href="https://www.instagram.com/solscape_retreats/" target="_blank" class="social-link" rel="noopener noreferrer">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/>
-          </svg>
-          @solscape_retreats
-        </a>
-        <a href="https://ig.me/m/solscape_retreats" target="_blank" class="social-link" rel="noopener noreferrer">
-          DM to book directly
-        </a>
-      </div>
+      <p style="margin-top: 24px; font-size: 0.95rem; color: var(--mocha);">solscaperetreats@gmail.com</p>
     </div>
   </section>
 
