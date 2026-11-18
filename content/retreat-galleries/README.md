@@ -39,12 +39,12 @@ lowercase-hyphenated, `npm run build` stops and names the entry to fix.
 1. Create `<retreat>.json` here containing `{ "photos": [] }`, then add photos as above.
 2. In `src/pages/retreats/past/<retreat>.astro`, import the component and place it
    directly after the Overview section. `place` finishes the heading
-   ("Moments from Catalonia"):
+   ("Moments from the Mani" on the Greece page):
 
    ```astro
    import RetreatGallery from '../../../components/RetreatGallery.astro';
 
-   <RetreatGallery retreat="spain" place="Catalonia" />
+   <RetreatGallery retreat="greece" place="the Mani" />
    ```
 
 No CSS or JavaScript changes are needed: the section, grid, and lightbox are shared.

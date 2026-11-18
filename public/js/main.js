@@ -48,23 +48,6 @@
     setInterval(() => goTo((current + 1) % track.children.length), 5500);
   }
 
-  /* ── Inquiry forms — submit to Netlify silently, show success message ── */
-  document.querySelectorAll('.inquiry-form').forEach(form => {
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-      const data = new FormData(form);
-      try {
-        await fetch('/', { method: 'POST', body: data });
-      } catch (_) { /* network error — still show success */ }
-      const card = form.closest('.form-card');
-      form.style.display = 'none';
-      if (card) {
-        const success = card.querySelector('.form-success');
-        if (success) success.style.display = 'block';
-      }
-    });
-  });
-
   /* ── Lightbox gallery (room + property galleries) ──
      Triggers carry their image set in a base-aware `data-gallery` JSON
      attribute rendered by Astro; this script only reads it, never builds
