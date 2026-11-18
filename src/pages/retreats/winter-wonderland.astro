@@ -35,8 +35,12 @@ const propertyGallery = JSON.stringify({
 const room = {
   name: 'The Deluxe Room',
   images: [
-    { file: 'balcony.webp', alt: 'Deluxe Room — private balcony with two chairs and a small table, looking over snowy firs to the mountains' },
-    { file: 'bathroom.webp', alt: 'Deluxe Room — walk-in shower in green marble, with bathrobes on hooks' },
+    { file: 'bedroom.webp', alt: 'Deluxe Room — king-size bed against a green leather headboard and oak paneling, with a lamp on each side' },
+    { file: 'bedroom-balcony.webp', alt: 'Deluxe Room — the bed and a sliding glass door out to the balcony, with two chairs and a small table outside' },
+    { file: 'sitting-area.webp', alt: 'Deluxe Room — window seat with patterned cushions beside the coffee corner, looking out at snowy firs' },
+    { file: 'balcony.webp', alt: 'Deluxe Room — balcony with two woven chairs and a small table, snowy forest beyond the glass railing' },
+    { file: 'bathroom-shower.webp', alt: 'Deluxe Room — travertine vanity, two bathrobes and a walk-in rainfall shower in green marble' },
+    { file: 'bathtub.webp', alt: 'Deluxe Room — freestanding oval soaking tub on a travertine floor (select rooms only)' },
   ],
 };
 const roomGallery = JSON.stringify({
@@ -193,7 +197,7 @@ const roomGallery = JSON.stringify({
       <div class="offering-card" style="margin-top: 40px;">
         {/* 16:9 instead of the default 200px height: in this single 760px card a 200px thumb would be a thin strip. */}
         <img class="room-thumb" src={`${base}/images/winter-wonderland/rooms/deluxe/${room.images[0].file}`} alt={room.images[0].alt} loading="lazy" style="height: auto; aspect-ratio: 16 / 9;">
-        <p>Approx. 30 m², with a double bed, floor-to-ceiling windows, wood paneling, a window seat and a walk-in shower. Every room has a private balcony or loggia, a coffee corner, minibar, bathrobes, slippers and Woods Copenhagen bath products. For two guests sharing one double bed, or single occupancy.</p>
+        <p>Approx. 30 m², with a king-size bed, floor-to-ceiling windows, wood paneling, a window seat and a walk-in rainfall shower. Every room has a private balcony or loggia, a coffee corner, minibar, bathrobes, slippers and Woods Copenhagen bath products. The freestanding soaking tub in the photos is in select rooms only. For two guests sharing one king-size bed, or single occupancy.</p>
         <div style="margin-top: 24px;">
           <div class="fact-row">
             <span class="fact-label">Sharing</span>
@@ -303,7 +307,7 @@ const roomGallery = JSON.stringify({
         </div>
         <div class="offering-card">
           <h3>Sharing a room?</h3>
-          <p>Shared Deluxe Rooms have one double bed, so sharing suits friends or partners traveling together.</p>
+          <p>Shared Deluxe Rooms have one king-size bed, so sharing suits friends or partners traveling together.</p>
         </div>
         <div class="offering-card">
           <h3>Do I have to join everything?</h3>
