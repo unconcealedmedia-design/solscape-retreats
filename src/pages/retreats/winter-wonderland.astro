@@ -15,16 +15,20 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 const heroImage = `${base}/images/winter-wonderland/hero.webp`;
 
 // "Where You'll Stay" gallery, in display order (4 across on desktop, 2 on
-// mobile — keep it at 4 or 8). `pos` nudges a tile's crop (object-position)
+// mobile — keep it a multiple of 4). `pos` nudges a tile's crop (object-position)
 // where the centre crop would cut the subject; the lightbox shows the full frame.
 const property = [
   { file: 'hotel-exterior-pool-snow.webp', alt: 'Aethos Monterosa in deep snow, with the outdoor pool in front and snowy peaks behind' },
+  { file: 'lobby-red-disc-wall.webp', alt: 'The lobby: a wall of red enamel discs above a stone sideboard, with three bouclé armchairs round a low table' },
   { file: 'hotel-lounge.webp', alt: 'The hotel lounge: leather sofas, marble tables, a wood-burning fireplace and shelves of books' },
   { file: 'hotel-facade-snow.webp', alt: "The hotel's timber facade, with two chairs on a small terrace in the snow" },
-  { file: 'climbing-wall-lounge.webp', alt: 'A leather sofa in the concrete lounge, with the climbing wall behind glass' },
-  { file: 'spa-indoor-pool.webp', alt: 'The indoor pool, with sunlight through floor-to-ceiling windows' },
-  { file: 'gondola-monterosa.webp', alt: 'Gondola cabins above the snow, with a mountain peak behind', pos: '72% 50%' },
   { file: 'yoga-room.webp', alt: "The hotel's yoga studio: pale-wood wall bars and mats laid out with rolled towels" },
+  { file: 'spa-indoor-pool.webp', alt: 'The indoor pool, with sunlight through floor-to-ceiling windows' },
+  { file: 'spa-sauna.webp', alt: 'The timber sauna: slatted benches either side of a wood-burning stove, with slot windows onto the snow' },
+  { file: 'spa-steam-room.webp', alt: 'The steam room: a round bench in dark mosaic tile around a central column, under a frosted window' },
+  { file: 'climbing-wall-lounge.webp', alt: 'A leather sofa in the concrete lounge, with the climbing wall behind glass' },
+  { file: 'ice-climbing-wall.webp', alt: 'A small group in helmets and crampons with an instructor at the foot of the frozen ice-climbing wall, at night' },
+  { file: 'gondola-monterosa.webp', alt: 'Gondola cabins above the snow, with a mountain peak behind', pos: '72% 50%' },
   { file: 'champoluc-village.webp', alt: 'Champoluc under snow, the parish church tower among the chalets' },
 ];
 const propertyGallery = JSON.stringify({
