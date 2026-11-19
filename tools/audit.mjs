@@ -62,6 +62,7 @@ export const LABELS = {
   'Book Now': [IG],
   'DM to Book': [IG],
   'Email': [MAIL],
+  'Skip to content': ['#main'],   // added in Structure Guide Phase 1 (skip link)
   // page actions
   'View Upcoming Retreats': ['#retreats', '/#retreats'],
   'Meet Samantha and Nada': ['/about'],
@@ -401,9 +402,11 @@ const CASES = [
   { check: 2, name: 'h2→h4 jump on Experience', fault: (d) => edit(d, 'experience.html', (s) => once(s, '</h2>', '</h2><h4>Injected</h4>')) },
   { check: 3, name: 'second <footer> on Luxor Aswan', fault: (d) => edit(d, 'retreats/egypt-nile.html', (s) => once(s, '</body>', '<footer></footer></body>')) },
   {
-    check: 4, name: 'skip link moved after the bar on Contact',
-    prepare: (d) => edit(d, 'contact.html', (s) => once(once(s, '<body>', '<body><a href="#main">Skip</a>'), '</body>', '<main id="main"></main></body>')),
-    fault: (d) => edit(d, 'contact.html', (s) => once(once(s, '<body><a href="#main">Skip</a>', '<body>'), '</body>', '<a href="#main">Skip</a></body>')),
+    // Since Phase 1 the build has a real skip link. Moved on every page alike, so the header stays
+    // byte-identical across pages and check 5 doesn't move.
+    check: 4, name: 'skip link moved after the bar (every page)',
+    fault: (d) => { const link = '<a href="#main" class="skip-link">Skip to content</a>';
+      for (const p of readBuild(d).pages) edit(d, path.relative(d, p.file), (s) => once(once(s, link, ''), '</header>', '</header>' + link)); },
   },
   { check: 5, name: 'one footer differs by a character (About)', fault: (d) => edit(d, 'about.html', (s) => once(s, 'All rights reserved', 'All rights reserved.')) },
   { check: 6, name: 'curly-quoted class attribute on Geneva', fault: (d) => edit(d, 'retreats/geneva.html', (s) => once(s, '</body>', '<span class=“oops”></span></body>')) },

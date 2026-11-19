@@ -143,10 +143,28 @@ section { padding: 100px 40px; }
 }
 .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
 
+/* ── Skip link: the first thing a keyboard reaches; hidden until focused ── */
+.skip-link {
+  position: fixed; top: 12px; left: 24px; z-index: 1001;
+  padding: 14px 22px;
+  background: var(--charcoal);
+  color: var(--cream);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 2px;
+  clip-path: inset(50%);
+}
+.skip-link:focus { clip-path: none; outline: 2px solid var(--terra); outline-offset: 2px; }
+/* <main> takes focus from the skip link (tabindex="-1"); a ring round the whole page helps no one. */
+main[tabindex="-1"]:focus { outline: none; }
+
 /* ================================================================
    6. NAVIGATION (incl. hamburger & mobile drawer)
    ================================================================ */
-nav {
+.site-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between;
   padding: 8px 60px;
@@ -218,6 +236,10 @@ nav {
 .nav-item:focus-within .dropdown {
   opacity: 1; visibility: visible; transform: translateY(0);
 }
+/* Esc (main.js) closes it until the pointer and focus have left the item. */
+.nav-item.dismissed .dropdown {
+  opacity: 0; visibility: hidden; transform: translateY(-6px);
+}
 
 .dropdown li a {
   display: block;
@@ -254,11 +276,34 @@ nav {
 }
 .nav-cta:hover { background: var(--terra-dk) !important; }
 
-/* Hamburger */
+/* 44px touch targets from an invisible ::before, so nothing visible moves.
+   Bar links: .nav-item is already position: relative and exactly the size of its
+   link, so the box is centred on it. */
+.nav-item > a::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  width: max(100%, 44px); height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+/* Instagram, Book Now (and the footer icons, section 18) are not positioned, and
+   positioning them would move Book Now's text by a sub-pixel. So their ::before is
+   an in-flow block whose negative margins cancel its own height: it takes up no
+   space, but receives taps over a 44px-tall box centred on the control.
+   Instagram: 18×18 icon → 44×44 box. Book Now: 34px tall (9px padding) → 44px tall,
+   full width. */
+.nav-insta::before,
+.nav-cta::before { content: ''; display: block; height: 44px; }
+.nav-insta::before { margin: -13px -13px -31px; }
+.nav-cta::before { margin: -14px -22px -30px; }
+
+/* Hamburger: a 44×44 button. The icon is 22×14.5px: the padding centres it, and the
+   negative margin hands back the extra size, so the icon and the bar's layout stay put. */
 .hamburger {
   display: none;
   flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer; padding: 4px;
+  background: none; border: none; cursor: pointer;
+  padding: 14.75px 11px;
+  margin: -10.75px -7px;
 }
 .hamburger span {
   display: block; width: 22px; height: 1.5px;
@@ -869,13 +914,18 @@ footer {
 .footer-logo span { color: var(--terra); }
 .footer-tagline { font-size: 0.82rem; color: var(--sand); line-height: 1.65; max-width: 220px; }
 
-.footer-col h5 {
+/* Column titles are labels, not headings (they used to be <h5>, which skipped levels).
+   font-weight: 700 keeps the bold the <h5> got from the browser. */
+.footer-col-title {
   font-size: 0.65rem;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 18px;
 }
+/* <nav aria-label="Footer"> wraps the three columns without becoming a grid item itself. */
+.footer-nav { display: contents; }
 .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 .footer-col ul a {
   text-decoration: none;
@@ -894,6 +944,10 @@ footer {
 .footer-copy { font-size: 0.68rem; color: var(--mocha); letter-spacing: 0.06em; }
 .footer-social { display: flex; gap: 16px; }
 .footer-social a { color: var(--sand); transition: color 0.2s; line-height: 0; }
+/* Invisible hit area (same in-flow ::before as the bar icons, section 6): 44px tall
+   but only 34px wide, because the two icons' centres are 34px apart and anything
+   wider would take taps meant for the other icon. */
+.footer-social a::before { content: ''; display: block; height: 44px; margin: -13px -8px -31px; }
 .footer-social a:hover { color: var(--terra); }
 
 /* footer logo image */
@@ -1303,7 +1357,7 @@ footer {
    24. RESPONSIVE — 768px and below
    ================================================================ */
 @media (max-width: 768px) {
-  nav { padding: 8px 24px; }
+  .site-nav { padding: 8px 24px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   section { padding: 72px 24px; }
@@ -1361,7 +1415,15 @@ footer {
   .footer-brand { grid-column: span 1; }
   .values-grid { grid-template-columns: 1fr; }
   .footer-col { display: none; }
-  .footer-col:first-of-type { display: block; }
+}
+
+/* Without JavaScript the menu button can't open the phone sheet, so the sheet's
+   links are shown in the page instead, below the bar, and the button is hidden
+   (visibility, so the bar keeps its layout). 107px = the bar at the top of the
+   page: 90px logo + 8px padding top and bottom + 1px border. */
+@media (scripting: none) and (max-width: 768px) {
+  .mobile-menu { display: block; position: static; padding-top: calc(107px + 24px); box-shadow: none; }
+  .hamburger { visibility: hidden; }
 }
 
 /* ================================================================

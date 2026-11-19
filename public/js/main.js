@@ -1,28 +1,61 @@
 /* SolScape Retreats — Shared JS */
 
 (function () {
-  /* ── Mobile menu ── */
+  /* ── Mobile menu ──
+     The button names the sheet with aria-controls in the markup; its state
+     (aria-expanded) is only claimed here, where the button actually works. */
   const hamburger = document.querySelector('.hamburger');
   const mobileMenu = document.querySelector('.mobile-menu');
 
   if (hamburger && mobileMenu) {
-    hamburger.addEventListener('click', () => {
-      const open = hamburger.classList.toggle('open');
+    const setMenu = (open) => {
+      hamburger.classList.toggle('open', open);
       mobileMenu.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
       document.body.style.overflow = open ? 'hidden' : '';
+    };
+    hamburger.setAttribute('aria-expanded', 'false');
+
+    hamburger.addEventListener('click', () => {
+      setMenu(!mobileMenu.classList.contains('open'));
     });
 
     mobileMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('open');
-        mobileMenu.classList.remove('open');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    // Esc closes the sheet and puts focus back on the button that opened it.
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+        setMenu(false);
+        hamburger.focus();
+      }
     });
   }
 
+  /* ── Retreats dropdown ──
+     It opens on :hover / :focus-within (CSS). Esc dismisses it until the
+     pointer and focus have both left the item, so it doesn't pop straight back. */
+  document.querySelectorAll('.nav-item.has-dropdown').forEach(item => {
+    const trigger = item.querySelector(':scope > a');
+    let pointerIn = false;
+    const reset = () => {
+      if (!pointerIn && !item.contains(document.activeElement)) item.classList.remove('dismissed');
+    };
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Escape' || item.classList.contains('dismissed')) return;
+      if (!item.matches(':hover') && !item.matches(':focus-within')) return;
+      item.classList.add('dismissed');
+      // Focus on a link inside the now-hidden panel moves back to "Retreats".
+      if (trigger && item.querySelector('.dropdown').contains(document.activeElement)) trigger.focus();
+    });
+    item.addEventListener('pointerenter', () => { pointerIn = true; });
+    item.addEventListener('pointerleave', () => { pointerIn = false; reset(); });
+    item.addEventListener('focusout', () => setTimeout(reset, 0));
+  });
+
   /* ── Sticky nav shrink ── */
-  const nav = document.querySelector('nav');
+  const nav = document.querySelector('.site-nav');
   if (nav) {
     window.addEventListener('scroll', () => {
       nav.style.padding = window.scrollY > 60
@@ -138,16 +171,5 @@
       });
     });
   }
-
-  /* ── Smooth scroll for anchor links ── */
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
 
 })();
