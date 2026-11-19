@@ -5,7 +5,8 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, "");
 // PHOTOS — Aethos Monterosa photos live in public/images/winter-wonderland/:
 //   hero.webp            → the hero below
 //   property/*.webp      → the "Where You'll Stay" gallery (the `property` list)
-//   rooms/deluxe/*.webp  → the Deluxe Room card + "View Room" (the `room` list)
+//   rooms/deluxe/*.webp        → the Deluxe Room card + its "View Room" (the `rooms` list)
+//   rooms/family-suite/*.webp  → the Family Suite card + its "View Room" (the `rooms` list)
 // property/hotel-exterior-pool-snow.webp is also the banner on the homepage card
 // and on the "Explore other retreats" strip cards (index, egypt-nile,
 // past/greece). Paths are built base-aware so they survive the
@@ -31,21 +32,37 @@ const propertyGallery = JSON.stringify({
   images: property.map((p) => ({ src: `${base}/images/winter-wonderland/property/${p.file}`, alt: p.alt })),
 });
 
-// Deluxe Room — the first photo is the card thumbnail; "View Room" opens them all.
-const room = {
-  name: 'The Deluxe Room',
-  images: [
-    { file: 'bedroom.webp', alt: 'Deluxe Room — king-size bed against a green leather headboard and oak paneling, with a lamp on each side' },
-    { file: 'bedroom-balcony.webp', alt: 'Deluxe Room — the bed and a sliding glass door out to the balcony, with two chairs and a small table outside' },
-    { file: 'sitting-area.webp', alt: 'Deluxe Room — window seat with patterned cushions beside the coffee corner, looking out at snowy firs' },
-    { file: 'balcony.webp', alt: 'Deluxe Room — balcony with two woven chairs and a small table, snowy forest beyond the glass railing' },
-    { file: 'bathroom-shower.webp', alt: 'Deluxe Room — travertine vanity, two bathrobes and a walk-in rainfall shower in green marble' },
-    { file: 'bathtub.webp', alt: 'Deluxe Room — freestanding oval soaking tub on a travertine floor (select rooms only)' },
-  ],
-};
-const roomGallery = JSON.stringify({
+// Rooms — files live in /images/winter-wonderland/rooms/<slug>/. In each list the
+// first photo is the card thumbnail and the first photo "View Room" opens on.
+const rooms = [
+  {
+    name: 'The Deluxe Room',
+    slug: 'deluxe',
+    images: [
+      { file: 'bedroom-balcony.webp', alt: 'Deluxe Room — the bed and a sliding glass door out to the balcony, with two chairs and a small table outside' },
+      { file: 'bedroom.webp', alt: 'Deluxe Room — double bed against a green leather headboard and oak paneling, with a lamp on each side' },
+      { file: 'sitting-area.webp', alt: 'Deluxe Room — window seat with patterned cushions beside the coffee corner, looking out at snowy firs' },
+      { file: 'balcony.webp', alt: 'Deluxe Room — balcony with two woven chairs and a small table, snowy forest beyond the glass railing' },
+      { file: 'bathroom-shower.webp', alt: 'Deluxe Room — travertine vanity, two bathrobes and a walk-in rainfall shower in green marble' },
+      { file: 'bathtub.webp', alt: 'Deluxe Room — freestanding oval soaking tub on a travertine floor (select rooms only)' },
+    ],
+  },
+  {
+    name: 'The Family Suite',
+    slug: 'family-suite',
+    images: [
+      { file: 'bedroom.webp', alt: 'Family Suite — king-size bed with a black herringbone headboard, a red pendant light hanging on each side and timber-slatted windows to the left' },
+      { file: 'desk.webp', alt: 'Family Suite — a black writing desk and armchair beside the bed, under an open timber staircase' },
+      { file: 'coffee-nook.webp', alt: 'Family Suite — a coffee nook built in under the timber staircase, with an espresso machine, books and a small lamp' },
+      { file: 'bathroom.webp', alt: 'Family Suite — live-edge wooden vanity with a green marble basin under globe lights, beside a glass-walled shower' },
+    ],
+  },
+];
+const roomSrc = (room, im) => `${base}/images/winter-wonderland/rooms/${room.slug}/${im.file}`;
+// Base-aware gallery payload for a room's "View Room" button (read by the lightbox JS).
+const roomGallery = (room) => JSON.stringify({
   name: room.name,
-  images: room.images.map((im) => ({ src: `${base}/images/winter-wonderland/rooms/deluxe/${im.file}`, alt: im.alt })),
+  images: room.images.map((im) => ({ src: roomSrc(room, im), alt: im.alt })),
 });
 ---
 <Layout title="Winter Wonderland Retreat — SolScape Retreats" description="Four nights at a MICHELIN Key hotel in the Italian Alps for eight women: daily yoga and barre, a mountain guide, and time that is yours.">
@@ -98,7 +115,7 @@ const roomGallery = JSON.stringify({
             </div>
             <div class="fact-row">
               <span class="fact-label">Price</span>
-              <span class="fact-value">€2,590 pp sharing<br>€3,650 single occupancy</span>
+              <span class="fact-value">From €2,590 pp</span>
             </div>
             <div class="fact-row">
               <span class="fact-label">Group Size</span>
@@ -188,27 +205,52 @@ const roomGallery = JSON.stringify({
   </section>
 
   <!-- ============================================================
-       SECTION: Your Room — one room type, two pricing options
+       SECTION: Your Room — two room types, each with its own "View Room" gallery
        ============================================================ -->
   <section style="background: var(--linen);">
-    <div class="container" style="max-width: 760px;">
+    <div class="container">
       <p class="section-label">Your Room</p>
-      <h2 class="section-title">The Deluxe <em>Room</em></h2>
-      <div class="offering-card" style="margin-top: 40px;">
-        {/* 16:9 instead of the default 200px height: in this single 760px card a 200px thumb would be a thin strip. */}
-        <img class="room-thumb" src={`${base}/images/winter-wonderland/rooms/deluxe/${room.images[0].file}`} alt={room.images[0].alt} loading="lazy" style="height: auto; aspect-ratio: 16 / 9;">
-        <p>Approx. 30 m², with a king-size bed, floor-to-ceiling windows, wood paneling, a window seat and a walk-in rainfall shower. Every room has a private balcony or loggia, a coffee corner, minibar, bathrobes, slippers and Woods Copenhagen bath products. The freestanding soaking tub in the photos is in select rooms only. For two guests sharing one king-size bed, or single occupancy.</p>
-        <div style="margin-top: 24px;">
-          <div class="fact-row">
-            <span class="fact-label">Sharing</span>
-            <span class="fact-value">€2,590 pp</span>
-          </div>
-          <div class="fact-row">
-            <span class="fact-label">Single occupancy</span>
-            <span class="fact-value">€3,650</span>
+      <h2 class="section-title">Choose your <em>room</em></h2>
+      {/* Cards are flex columns with the price block pushed to the foot (margin-top: auto), so the
+          price rows and View Room buttons line up across the row although the texts differ in length.
+          Thumbs are 16:9 instead of the default 200px height, which would be a thin strip at this card width. */}
+      <div class="offerings-grid" style="margin-top: 40px;">
+        <div class="offering-card" style="display: flex; flex-direction: column;">
+          <img class="room-thumb" src={roomSrc(rooms[0], rooms[0].images[0])} alt={rooms[0].images[0].alt} loading="lazy" style="height: auto; aspect-ratio: 16 / 9;">
+          <h3>The Deluxe Room</h3>
+          <p>Approx. 30 m², with a double bed, floor-to-ceiling windows, wood paneling, a window seat and a walk-in rainfall shower. Every room has a private balcony or loggia, a coffee corner, minibar, bathrobes, slippers and Woods Copenhagen bath products. The freestanding soaking tub in the photos is in select rooms only. For two guests sharing one double bed, or single occupancy.</p>
+          <div style="margin-top: auto; padding-top: 24px;">
+            <div>
+              <div class="fact-row">
+                <span class="fact-label">Sharing</span>
+                <span class="fact-value">€2,590 pp</span>
+              </div>
+              <div class="fact-row">
+                <span class="fact-label">Single occupancy</span>
+                <span class="fact-value">€3,650</span>
+              </div>
+            </div>
+            <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[0])}>View Room <span aria-hidden="true">→</span></button>
           </div>
         </div>
-        <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery}>View Room <span aria-hidden="true">→</span></button>
+        <div class="offering-card" style="display: flex; flex-direction: column;">
+          <img class="room-thumb" src={roomSrc(rooms[1], rooms[1].images[0])} alt={rooms[1].images[0].alt} loading="lazy" style="height: auto; aspect-ratio: 16 / 9;">
+          <h3>The Family Suite</h3>
+          <p>Share it with a friend, or keep it all to yourself. Approx. 55 m², with a king-size bed, floor-to-ceiling windows, a private terrace or balcony and a sitting area. Only one available for the group.</p>
+          <div style="margin-top: auto; padding-top: 24px;">
+            <div>
+              <div class="fact-row">
+                <span class="fact-label">Sharing</span>
+                <span class="fact-value">€3,290 pp</span>
+              </div>
+              <div class="fact-row">
+                <span class="fact-label">Single occupancy</span>
+                <span class="fact-value">€4,250</span>
+              </div>
+            </div>
+            <button type="button" class="view-room-btn js-gallery-open" data-gallery={roomGallery(rooms[1])}>View Room <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -258,7 +300,7 @@ const roomGallery = JSON.stringify({
         <div class="inc-list">
           <h4>Included</h4>
           <ul>
-            <li>4 nights at Aethos Monterosa in a Deluxe Room</li>
+            <li>4 nights at Aethos Monterosa in a Deluxe Room or the Family Suite</li>
             <li>Breakfast daily and 4 hotel dinners</li>
             <li>8 Yoga sessions and 4 Barre sessions</li>
             <li>Daily one-hour spa access, including sauna</li>
@@ -307,7 +349,7 @@ const roomGallery = JSON.stringify({
         </div>
         <div class="offering-card">
           <h3>Sharing a room?</h3>
-          <p>Shared Deluxe Rooms have one king-size bed, so sharing suits friends or partners traveling together.</p>
+          <p>Shared Deluxe Rooms have one double bed, so sharing suits friends or partners traveling together.</p>
         </div>
         <div class="offering-card">
           <h3>Do I have to join everything?</h3>
@@ -330,7 +372,7 @@ const roomGallery = JSON.stringify({
       <h2 class="section-title">Securing your <em>place</em></h2>
       <p style="font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--terra); font-weight: 500; margin: 4px 0 8px;">Now open for booking</p>
       <div class="divider"></div>
-      <p style="font-size: 0.95rem; line-height: 1.9; color: var(--mocha); margin-bottom: 32px;">€2,590 per person sharing a double room, or €3,650 single occupancy. A €1,000 non-refundable deposit reserves your place, due by December 1, 2026, with final payment by December 15, 2026. All retreat payments are non-refundable: accommodation and arrangements are secured and paid for in advance, so we strongly recommend comprehensive travel insurance when booking. Limited to eight women. By paying the deposit, you confirm acceptance of these terms.</p>
+      <p style="font-size: 0.95rem; line-height: 1.9; color: var(--mocha); margin-bottom: 32px;">€2,590 per person sharing a double room, or €3,650 single occupancy. The Family Suite is €3,290 per person sharing, or €4,250 single occupancy. A €1,000 non-refundable deposit reserves your place, due by December 1, 2026, with final payment by December 15, 2026. All retreat payments are non-refundable: accommodation and arrangements are secured and paid for in advance, so we strongly recommend comprehensive travel insurance when booking. Limited to eight women. By paying the deposit, you confirm acceptance of these terms.</p>
       <div style="display: flex; gap: 14px; flex-wrap: wrap;">
         <a href="https://ig.me/m/solscape_retreats" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Message us on Instagram</a>
         <a href="mailto:solscaperetreats@gmail.com?subject=Winter%20Wonderland%20Enquiry" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Email us</a>
