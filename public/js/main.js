@@ -54,16 +54,6 @@
     item.addEventListener('focusout', () => setTimeout(reset, 0));
   });
 
-  /* ── Sticky nav shrink ── */
-  const nav = document.querySelector('.site-nav');
-  if (nav) {
-    window.addEventListener('scroll', () => {
-      nav.style.padding = window.scrollY > 60
-        ? (window.innerWidth > 768 ? '6px 60px' : '6px 24px')
-        : (window.innerWidth > 768 ? '8px 60px' : '8px 24px');
-    }, { passive: true });
-  }
-
   /* ── Testimonial carousel ── */
   const track = document.querySelector('.testimonial-track');
   const dots = document.querySelectorAll('.carousel-dot');

@@ -53,9 +53,16 @@
   --sage:      #B6B093;
   --sage-lt:   #D6DACD;
   --gold:      #BF9A5E;
+
+  /* ── Top bar: one fixed height (border included). The phone sheet's top and
+     the anchor-jump offset read it, so they follow when it changes (section 6;
+     smaller values in sections 23–25). ── */
+  --nav-h:      72px;
+  --nav-logo-h: 36px;
 }
 
-html { scroll-behavior: smooth; }
+/* scroll-padding: in-page jumps (and focus scrolling) stop below the fixed bar. */
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
 
 body {
   font-family: 'Jost', sans-serif;
@@ -167,20 +174,23 @@ main[tabindex="-1"]:focus { outline: none; }
 .site-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 60px;
+  height: var(--nav-h);
+  padding: 0 60px;
   background: rgba(249,245,234,0.92);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(204,154,103,0.14);
-  transition: padding 0.3s;
 }
 
+/* min-height: a 44px tap target round the shorter logo; the bar stays taller. */
 .logo {
   display: flex; align-items: center; gap: 10px;
+  min-height: 44px;
   text-decoration: none; flex-shrink: 0;
 }
 
 .logo-mark { width: 36px; height: 36px; }
-.logo-img { max-width: 320px; max-height: 90px; width: auto; height: auto; display: block; filter: none; mix-blend-mode: multiply; }
+/* The wordmark file is trimmed to the lettering, so its height is the lettering's height. */
+.logo-img { height: var(--nav-logo-h); width: auto; display: block; filter: none; mix-blend-mode: multiply; }
 
 .logo-text {
   font-family: 'Cormorant Garamond', serif;
@@ -317,7 +327,7 @@ main[tabindex="-1"]:focus { outline: none; }
 /* Mobile drawer */
 .mobile-menu {
   display: none;
-  position: fixed; top: 68px; left: 0; right: 0; z-index: 999;
+  position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 999;
   background: var(--cream);
   border-bottom: 1px solid var(--sand);
   padding: 24px 28px 32px;
@@ -1348,6 +1358,8 @@ footer {
    23. RESPONSIVE — 1024px and below
    ================================================================ */
 @media (max-width: 1024px) {
+  /* 769–1024px: the bar links are still shown, so the logo stays narrow (about 62px). */
+  :root { --nav-logo-h: 20px; }
   .footer-inner { grid-template-columns: 1fr 1fr; gap: 36px; }
   .overview-grid { grid-template-columns: 1fr; }
   .facts-card { position: static; }
@@ -1357,7 +1369,8 @@ footer {
    24. RESPONSIVE — 768px and below
    ================================================================ */
 @media (max-width: 768px) {
-  .site-nav { padding: 8px 24px; }
+  :root { --nav-h: 60px; --nav-logo-h: 28px; }
+  .site-nav { padding: 0 24px; }
   .nav-links { display: none; }
   .hamburger { display: flex; }
   section { padding: 72px 24px; }
@@ -1417,12 +1430,16 @@ footer {
   .footer-col { display: none; }
 }
 
+/* Narrowest phones: a smaller logo keeps clear space beside Instagram. */
+@media (max-width: 340px) {
+  :root { --nav-logo-h: 20px; }
+}
+
 /* Without JavaScript the menu button can't open the phone sheet, so the sheet's
    links are shown in the page instead, below the bar, and the button is hidden
-   (visibility, so the bar keeps its layout). 107px = the bar at the top of the
-   page: 90px logo + 8px padding top and bottom + 1px border. */
+   (visibility, so the bar keeps its layout). */
 @media (scripting: none) and (max-width: 768px) {
-  .mobile-menu { display: block; position: static; padding-top: calc(107px + 24px); box-shadow: none; }
+  .mobile-menu { display: block; position: static; padding-top: calc(var(--nav-h) + 24px); box-shadow: none; }
   .hamburger { visibility: hidden; }
 }
 
